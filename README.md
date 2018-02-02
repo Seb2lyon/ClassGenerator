@@ -7,7 +7,6 @@ This is a graphical tool that will help you to generate automatically a C++ clas
 The idea of this program come from the wonderfull website "Openclassrooms" which is made for beginners to learn programing langages. I've learned C++ from there : https://openclassrooms.com/courses/programmez-avec-le-langage-c
 
 I still have improvements to do, like :
-- improve the controls on the class' (and mother-class') name input
 - edit the Header Guard (to change it while typing class name)
 - add license reference in comments
 - add includes
