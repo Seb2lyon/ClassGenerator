@@ -2,7 +2,7 @@
 
 FenCodeGenere::FenCodeGenere(FenPrincipale *fenetre, QString *chaineCode) : QDialog(fenetre)
 {
-    setFixedSize(400, 500);
+    setFixedSize(400, 550);
 
     QTextEdit *codeGenere = new QTextEdit;
     codeGenere->setText(*chaineCode);

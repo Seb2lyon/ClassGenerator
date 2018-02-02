@@ -13,11 +13,14 @@ class FenPrincipale : public QWidget
 
     public slots :
         void validerFenPrincipale();
+        void activeHeaderGuard();
+        void genereHeaderGuard();
 
     private :
         QLineEdit *nomClasse; // Class name (should be set)
         QLineEdit *nomClasseMere; // Mother-class name
         QCheckBox *protegeHeader; // Checkbox "Protect header against multiple inclusions"
+        QLineEdit *headerGuard; // Edit Header Guard
         QCheckBox *genereConstructeur; // Checkbox "Generate default constructor"
         QCheckBox *genereDestructeur; // Checkbox "Generate destructor"
         QGroupBox *ajoutCommentaires; // Checkbox "Add comments"

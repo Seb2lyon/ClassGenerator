@@ -3,7 +3,7 @@
 
 FenPrincipale::FenPrincipale():QWidget()
 {
-    setFixedSize(450, 500);
+    setFixedSize(450, 550);
 
     QValidator *validator = new QRegularExpressionValidator(QRegularExpression("[_A-Za-z0-9]{0,32}"));
 
@@ -29,6 +29,8 @@ FenPrincipale::FenPrincipale():QWidget()
     this->protegeHeader = new QCheckBox;
     protegeHeader->setText("Protéger le &header contre les inclusions multiples");
     protegeHeader->setChecked(true);
+    this->headerGuard = new QLineEdit;
+    headerGuard->setStyleSheet("background: rgb(255,255,255)");
     this->genereConstructeur = new QCheckBox;
     genereConstructeur->setText("Générer un &constructeur par défaut");
     genereConstructeur->setChecked(true);
@@ -38,6 +40,7 @@ FenPrincipale::FenPrincipale():QWidget()
     // Form Layout
     QFormLayout *optionsLayout = new QFormLayout;
     optionsLayout->addRow(protegeHeader);
+    optionsLayout->addRow(headerGuard);
     optionsLayout->addRow(genereConstructeur);
     optionsLayout->addRow(genereDestructeur);
 
@@ -88,6 +91,8 @@ FenPrincipale::FenPrincipale():QWidget()
 
     QObject::connect(quitter, SIGNAL(clicked()), qApp, SLOT(quit()));
     QObject::connect(generer, SIGNAL(clicked()), this, SLOT(validerFenPrincipale()));
+    QObject::connect(protegeHeader, SIGNAL(stateChanged(int)), this, SLOT(activeHeaderGuard()));
+    QObject::connect(nomClasse, SIGNAL(textChanged(QString)), this, SLOT(genereHeaderGuard()));
 }
 
 void FenPrincipale::validerFenPrincipale()
@@ -115,7 +120,6 @@ void FenPrincipale::validerFenPrincipale()
     {
         nomClasse->setStyleSheet("background: rgb(255,255,255)");
         nomClasseMere->setStyleSheet("background: rgb(252,254,171)");
-        nomClasse->setStyleSheet("background: rgb(255,255,255)");
         nomClasseMere->setFocus(Qt::OtherFocusReason);
         QMessageBox::warning(this, "Attention", "Le nom de la Classe mère est invalide :\nLe nom ne doit pas commencer par un chiffre");
     }
@@ -154,13 +158,25 @@ void FenPrincipale::validerFenPrincipale()
             chaine->append(QString("*/\n\n\n"));
         }
 
-        // Checkbox checked : Header protecteed
+        // Checkbox checked : Header protected
         if(protegeHeader->isChecked())
         {
-            chaine->append(QString("#ifndef HEADER_"));
-            chaine->append(QString(nomClasse->text().toUpper()));
-            chaine->append(QString("\n#define HEADER_"));
-            chaine->append(QString(nomClasse->text().toUpper()));
+            // If the user delete the generated Header Guard
+            if(headerGuard->text().isEmpty())
+            {
+                chaine->append(QString("#ifndef HEADER_"));
+                chaine->append(QString(nomClasse->text().toUpper()));
+                chaine->append(QString("\n#define HEADER_"));
+                chaine->append(QString(nomClasse->text().toUpper()));
+            }
+            else
+            {
+                chaine->append(QString("#ifndef "));
+                chaine->append(QString(headerGuard->text().toUpper()));
+                chaine->append(QString("\n#define "));
+                chaine->append(QString(headerGuard->text().toUpper()));
+            }
+
             chaine->append(QString("\n\n\n"));
         }
 
@@ -197,5 +213,54 @@ void FenPrincipale::validerFenPrincipale()
         FenCodeGenere fenetreCode(this, chaine);
 
         fenetreCode.exec();
+    }
+}
+
+void FenPrincipale::activeHeaderGuard()
+{
+    // Checkbox checked : Header protected
+    if(protegeHeader->checkState() == Qt::Checked)
+    {
+        headerGuard->setEnabled(true);
+
+        QString chaine("HEADER_");
+        chaine.append(nomClasse->text().toUpper());
+
+        if(nomClasse->text().isEmpty())
+        {
+            headerGuard->clear();
+        }
+        else
+        {
+            headerGuard->setText(chaine);
+        }
+
+        headerGuard->setStyleSheet("background: rgb(255,255,255)");
+    }
+    else
+    {
+        headerGuard->clear();
+        headerGuard->setStyleSheet("background: rgb(245,245,245)");
+        headerGuard->setEnabled(false);
+    }
+
+}
+
+void FenPrincipale::genereHeaderGuard()
+{
+    // Checkbox checked : Header protected
+    if(protegeHeader->isChecked())
+    {
+        QString chaine("HEADER_");
+        chaine.append(nomClasse->text().toUpper());
+
+        if(nomClasse->text().isEmpty())
+        {
+            headerGuard->clear();
+        }
+        else
+        {
+            headerGuard->setText(chaine);
+        }
     }
 }
