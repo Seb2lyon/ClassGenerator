@@ -26,6 +26,7 @@ class FenPrincipale : public QWidget
         QGroupBox *ajoutCommentaires; // Checkbox "Add comments"
         QLineEdit *auteur; // Athor name
         QDateEdit *dateCreation; // Creation date
+        QComboBox *license; // Choose license
         QTextEdit *roleClasse; // Class description
 };
 

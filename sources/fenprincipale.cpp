@@ -8,10 +8,10 @@ FenPrincipale::FenPrincipale():QWidget()
     QValidator *validator = new QRegularExpressionValidator(QRegularExpression("[_A-Za-z0-9]{0,32}"));
 
     // 1) Form "Class definition"
-    this->nomClasse = new QLineEdit;
+    nomClasse = new QLineEdit;
     nomClasse->setStyleSheet("background: rgb(255,255,255)");
     nomClasse->setValidator(validator);
-    this->nomClasseMere = new QLineEdit;
+    nomClasseMere = new QLineEdit;
     nomClasseMere->setStyleSheet("background: rgb(255,255,255)");
     nomClasseMere->setValidator(validator);
 
@@ -26,15 +26,15 @@ FenPrincipale::FenPrincipale():QWidget()
 
 
     // 2) Checkbox "Options"
-    this->protegeHeader = new QCheckBox;
+    protegeHeader = new QCheckBox;
     protegeHeader->setText("Protéger le &header contre les inclusions multiples");
     protegeHeader->setChecked(true);
-    this->headerGuard = new QLineEdit;
+    headerGuard = new QLineEdit;
     headerGuard->setStyleSheet("background: rgb(255,255,255)");
-    this->genereConstructeur = new QCheckBox;
+    genereConstructeur = new QCheckBox;
     genereConstructeur->setText("Générer un &constructeur par défaut");
     genereConstructeur->setChecked(true);
-    this->genereDestructeur = new QCheckBox;
+    genereDestructeur = new QCheckBox;
     genereDestructeur->setText("Générer un &destructeur");
 
     // Form Layout
@@ -50,18 +50,26 @@ FenPrincipale::FenPrincipale():QWidget()
 
 
     // 3) Lignes du formulaire "Ajouter des commentaires"
-    this->auteur = new QLineEdit;
-    this->dateCreation = new QDateEdit(QDate::currentDate());
-    this->roleClasse = new QTextEdit;
+    auteur = new QLineEdit;
+    dateCreation = new QDateEdit(QDate::currentDate());
+    license = new QComboBox;
+    license->addItem("Aucune licence associée à ce logiciel");
+    license->addItem("Apache License 2.0");
+    license->addItem("GNU GPLv3");
+    license->addItem("MIT License");
+    license->addItem("Autre... (modifiez cette ligne)");
+    license->setEditable(true);
+    roleClasse = new QTextEdit;
 
     // Form Layout
     QFormLayout *ajoutCommentairesLayout = new QFormLayout;
     ajoutCommentairesLayout->addRow("&Auteur : ", auteur);
     ajoutCommentairesLayout->addRow("Da&te de création : ", dateCreation);
+    ajoutCommentairesLayout->addRow("&Licence : ", license);
     ajoutCommentairesLayout->addRow("&Rôle de la classe : ", roleClasse);
 
     // Set the form layout into QGroupBox
-    this->ajoutCommentaires = new QGroupBox("Ajouter des commentaires");
+    ajoutCommentaires = new QGroupBox("Ajouter des commentaires");
     ajoutCommentaires->setCheckable(true);
     ajoutCommentaires->setChecked(false);
     ajoutCommentaires->setLayout(ajoutCommentairesLayout);
@@ -146,6 +154,14 @@ void FenPrincipale::validerFenPrincipale()
             chaine->append(QString("Date de création : "));
             chaine->append(QString(dateCreation->date().toString(Qt::TextDate)));
             chaine->append(QString("\n"));
+
+            // If licence is set
+            if(license->currentIndex() != 0 && license->currentText() != QString("Autre... (modifiez cette ligne)") && !license->currentText().isEmpty())
+            {
+                chaine->append("\nCe logiciel est sous licence : ");
+                chaine->append(license->currentText());
+                chaine->append("\n");
+            }
 
             // If the role's text is written
             if(!roleClasse->toPlainText().isEmpty())
