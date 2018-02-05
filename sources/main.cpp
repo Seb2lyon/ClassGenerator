@@ -12,13 +12,13 @@
 int main(int argc, char *argv[])
 {
     QApplication appli(argc, argv);
-    appli.setWindowIcon(QIcon(QPixmap("icone.png")));
+    appli.setWindowIcon(QIcon(QPixmap("images/icone.png")));
     appli.setApplicationName("ClassGenerator v. 3.0");
 
     QString local = QLocale::system().name().section('_', 0, 0);
 
     QTranslator translator;
-    translator.load(QString("ClassGenerator_" + local));
+    translator.load(QString("config/ClassGenerator_" + local));
 
     appli.installTranslator(&translator);
 

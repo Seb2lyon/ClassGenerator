@@ -88,7 +88,7 @@ FenPrincipale::FenPrincipale():QWidget()
 
     // Info button
     QPushButton *info = new QPushButton;
-    info->setIcon(QIcon("info.png"));
+    info->setIcon(QIcon("images/info.png"));
     info->setFixedSize(QSize(25, 25));
     info->setIconSize(QSize(20, 20));
     info->setFlat(true);
