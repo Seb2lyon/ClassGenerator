@@ -17,25 +17,24 @@ FenPrincipale::FenPrincipale():QWidget()
 
     // Form Layout
     QFormLayout *defClasseLayout = new QFormLayout;
-    defClasseLayout->addRow("&Nom : ", nomClasse);
-    defClasseLayout->addRow("Classe &mère : ", nomClasseMere);
+    defClasseLayout->addRow(tr("&Nom : "), nomClasse);
+    defClasseLayout->addRow(tr("Classe &mère : "), nomClasseMere);
 
     // Set the form layout into QGroupBox
-    QGroupBox *defClasse = new QGroupBox("Définition de la classe");
+    QGroupBox *defClasse = new QGroupBox(tr("Définition de la classe"));
     defClasse->setLayout(defClasseLayout);
 
 
     // 2) Checkbox "Options"
     protegeHeader = new QCheckBox;
-    protegeHeader->setText("Protéger le &header contre les inclusions multiples");
+    protegeHeader->setText(tr("Protéger le &header contre les inclusions multiples"));
     protegeHeader->setChecked(true);
     headerGuard = new QLineEdit;
-    headerGuard->setStyleSheet("background: rgb(255,255,255)");
     genereConstructeur = new QCheckBox;
-    genereConstructeur->setText("Générer un &constructeur par défaut");
+    genereConstructeur->setText(tr("Générer un &constructeur par défaut"));
     genereConstructeur->setChecked(true);
     genereDestructeur = new QCheckBox;
-    genereDestructeur->setText("Générer un &destructeur");
+    genereDestructeur->setText(tr("Générer un &destructeur"));
 
     // Form Layout
     QFormLayout *optionsLayout = new QFormLayout;
@@ -45,40 +44,40 @@ FenPrincipale::FenPrincipale():QWidget()
     optionsLayout->addRow(genereDestructeur);
 
     // Set the form layout into QGroupBox
-    QGroupBox *options = new QGroupBox("Options");
+    QGroupBox *options = new QGroupBox(tr("Options"));
     options->setLayout(optionsLayout);
 
 
-    // 3) Lignes du formulaire "Ajouter des commentaires"
+    // 3) Form "Add comments"
     auteur = new QLineEdit;
     dateCreation = new QDateEdit(QDate::currentDate());
     license = new QComboBox;
-    license->addItem("Aucune licence associée à ce logiciel");
+    license->addItem(tr("Aucune licence associée à ce logiciel"));
     license->addItem("Apache License 2.0");
     license->addItem("GNU GPLv3");
     license->addItem("MIT License");
-    license->addItem("Autre... (modifiez cette ligne)");
+    license->addItem(tr("Autre... (modifiez cette ligne)"));
     license->setEditable(true);
     roleClasse = new QTextEdit;
 
     // Form Layout
     QFormLayout *ajoutCommentairesLayout = new QFormLayout;
-    ajoutCommentairesLayout->addRow("&Auteur : ", auteur);
-    ajoutCommentairesLayout->addRow("Da&te de création : ", dateCreation);
-    ajoutCommentairesLayout->addRow("&Licence : ", license);
-    ajoutCommentairesLayout->addRow("&Rôle de la classe : ", roleClasse);
+    ajoutCommentairesLayout->addRow(tr("&Auteur : "), auteur);
+    ajoutCommentairesLayout->addRow(tr("Da&te de création : "), dateCreation);
+    ajoutCommentairesLayout->addRow(tr("&Licence : "), license);
+    ajoutCommentairesLayout->addRow(tr("&Rôle de la classe : "), roleClasse);
 
     // Set the form layout into QGroupBox
-    ajoutCommentaires = new QGroupBox("Ajouter des commentaires");
+    ajoutCommentaires = new QGroupBox(tr("Ajouter des commentaires"));
     ajoutCommentaires->setCheckable(true);
     ajoutCommentaires->setChecked(false);
     ajoutCommentaires->setLayout(ajoutCommentairesLayout);
 
 
     // 4) Create buttons
-    QPushButton *generer = new QPushButton("Générez !");
+    QPushButton *generer = new QPushButton(tr("Générez !"));
     generer->setFixedSize(80, 25);
-    QPushButton *quitter = new QPushButton("Quitter");
+    QPushButton *quitter = new QPushButton(tr("Quitter"));
     quitter->setFixedSize(80, 25);
 
     // Buttons layout
@@ -87,13 +86,25 @@ FenPrincipale::FenPrincipale():QWidget()
     boutons->addWidget(quitter);
     boutons->setAlignment(Qt::AlignRight);
 
+    // Info button
+    QPushButton *info = new QPushButton;
+    info->setIcon(QIcon("info.png"));
+    info->setFixedSize(QSize(25, 25));
+    info->setIconSize(QSize(20, 20));
+    info->setFlat(true);
+
+    // End of page layout
+    QHBoxLayout *piedpage = new QHBoxLayout;
+    piedpage->addWidget(info);
+    piedpage->addLayout(boutons);
+
 
     // Generate global layout
     QVBoxLayout *layoutGlobal = new QVBoxLayout;
     layoutGlobal->addWidget(defClasse);
     layoutGlobal->addWidget(options);
     layoutGlobal->addWidget(ajoutCommentaires);
-    layoutGlobal->addLayout(boutons);
+    layoutGlobal->addLayout(piedpage);
 
     this->setLayout(layoutGlobal);
 
@@ -101,6 +112,7 @@ FenPrincipale::FenPrincipale():QWidget()
     QObject::connect(generer, SIGNAL(clicked()), this, SLOT(validerFenPrincipale()));
     QObject::connect(protegeHeader, SIGNAL(stateChanged(int)), this, SLOT(activeHeaderGuard()));
     QObject::connect(nomClasse, SIGNAL(textChanged(QString)), this, SLOT(genereHeaderGuard()));
+    QObject::connect(info, SIGNAL(clicked()), this, SLOT(fenetreInfo()));
 }
 
 void FenPrincipale::validerFenPrincipale()
@@ -115,21 +127,21 @@ void FenPrincipale::validerFenPrincipale()
         nomClasse->setStyleSheet("background: rgb(252,254,171)");
         nomClasseMere->setStyleSheet("background: rgb(255,255,255)");
         nomClasse->setFocus(Qt::OtherFocusReason);
-        QMessageBox::warning(this, "Attention", "Vous devez renseigner le nom de la Classe");
+        QMessageBox::warning(this, tr("Attention"), tr("Vous devez renseigner le nom de la Classe"));
     }
     else if(validator->validate(inputClass, pos) != QValidator::Acceptable)
     {
         nomClasse->setStyleSheet("background: rgb(252,254,171)");
         nomClasseMere->setStyleSheet("background: rgb(255,255,255)");
         nomClasse->setFocus(Qt::OtherFocusReason);
-        QMessageBox::warning(this, "Attention", "Le nom de la Classe est invalide :\nLe nom ne doit pas commencer par un chiffre");
+        QMessageBox::warning(this, tr("Attention"), tr("Le nom de la Classe est invalide :\nLe nom ne doit pas commencer par un chiffre"));
     }
     else if(!nomClasseMere->text().isEmpty() && validator->validate(inputClassMere, pos) != QValidator::Acceptable)
     {
         nomClasse->setStyleSheet("background: rgb(255,255,255)");
         nomClasseMere->setStyleSheet("background: rgb(252,254,171)");
         nomClasseMere->setFocus(Qt::OtherFocusReason);
-        QMessageBox::warning(this, "Attention", "Le nom de la Classe mère est invalide :\nLe nom ne doit pas commencer par un chiffre");
+        QMessageBox::warning(this, tr("Attention"), tr("Le nom de la Classe mère est invalide :\nLe nom ne doit pas commencer par un chiffre"));
     }
     else
     {
@@ -146,19 +158,19 @@ void FenPrincipale::validerFenPrincipale()
             // If the author's name is set
             if(!auteur->text().isEmpty())
             {
-                chaine->append(QString("Auteur : "));
+                chaine->append(QString(tr("Auteur : ")));
                 chaine->append(QString(auteur->text()));
                 chaine->append(QString("\n"));
             }
 
-            chaine->append(QString("Date de création : "));
-            chaine->append(QString(dateCreation->date().toString(Qt::TextDate)));
+            chaine->append(QString(tr("Date de création : ")));
+            chaine->append(QString(dateCreation->date().toString(Qt::SystemLocaleLongDate)));
             chaine->append(QString("\n"));
 
             // If licence is set
-            if(license->currentIndex() != 0 && license->currentText() != QString("Autre... (modifiez cette ligne)") && !license->currentText().isEmpty())
+            if(license->currentIndex() != 0 && license->currentText() != QString(tr("Autre... (modifiez cette ligne)")) && !license->currentText().isEmpty())
             {
-                chaine->append("\nCe logiciel est sous licence : ");
+                chaine->append(tr("\nCe logiciel est sous licence : "));
                 chaine->append(license->currentText());
                 chaine->append("\n");
             }
@@ -166,7 +178,7 @@ void FenPrincipale::validerFenPrincipale()
             // If the role's text is written
             if(!roleClasse->toPlainText().isEmpty())
             {
-                chaine->append(QString("\nRôle :\n"));
+                chaine->append(QString(tr("\nRôle :\n")));
                 chaine->append(QString(roleClasse->toPlainText()));
                 chaine->append(QString("\n"));
             }
@@ -250,13 +262,10 @@ void FenPrincipale::activeHeaderGuard()
         {
             headerGuard->setText(chaine);
         }
-
-        headerGuard->setStyleSheet("background: rgb(255,255,255)");
     }
     else
     {
         headerGuard->clear();
-        headerGuard->setStyleSheet("background: rgb(245,245,245)");
         headerGuard->setEnabled(false);
     }
 
@@ -279,4 +288,10 @@ void FenPrincipale::genereHeaderGuard()
             headerGuard->setText(chaine);
         }
     }
+}
+
+void FenPrincipale::fenetreInfo()
+{
+   QMessageBox::information(this, tr("Information"), tr("<strong>CodeGenerator v. 3.0</strong><br /><br />Programmeur : Seb2lyon<br />Développé entre le 30-01-2018 et le 05-02-2018<br />GNU General Public License v3.0<br /><br /><a href=http://seb2lyon.site11.com>Visitez mon site web !!!</a>"));
+
 }

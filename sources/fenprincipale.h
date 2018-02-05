@@ -15,6 +15,7 @@ class FenPrincipale : public QWidget
         void validerFenPrincipale();
         void activeHeaderGuard();
         void genereHeaderGuard();
+        void fenetreInfo();
 
     private :
         QLineEdit *nomClasse; // Class name (should be set)

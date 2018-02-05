@@ -1,7 +1,7 @@
 #include "fencodegenere.h"
 
 FenCodeGenere::FenCodeGenere(FenPrincipale *fenetre, QString *chaineCode) : QDialog(fenetre)
-{
+{    
     setFixedSize(400, 550);
 
     QTextEdit *codeGenere = new QTextEdit;
@@ -9,7 +9,7 @@ FenCodeGenere::FenCodeGenere(FenPrincipale *fenetre, QString *chaineCode) : QDia
     codeGenere->setReadOnly(true);
     codeGenere->setFont(QFont("Courier", 9));
 
-    QPushButton *fermer = new QPushButton("Fermer");
+    QPushButton *fermer = new QPushButton(tr("Fermer"));
     fermer->setFixedHeight(25);
 
     QVBoxLayout *layout = new QVBoxLayout;
