@@ -15,6 +15,12 @@ class FenPrincipale : public QWidget
         void validerFenPrincipale();
         void activeHeaderGuard();
         void genereHeaderGuard();
+        void gestionIncludes();
+        void gestionAttributs();
+        void ajouterIncludes();
+        void supprimerIncludes();
+        void annulerIncludes();
+        void validerIncludes();
         void fenetreInfo();
 
     private :
@@ -24,8 +30,13 @@ class FenPrincipale : public QWidget
         QLineEdit *headerGuard; // Edit Header Guard
         QCheckBox *genereConstructeur; // Checkbox "Generate default constructor"
         QCheckBox *genereDestructeur; // Checkbox "Generate destructor"
+        QCheckBox *ajoutIncludes; // Checkbox "Add includes"
+        QCheckBox *ajoutAttributs; // CheckBox "Add attibutes"
+        QDialog *fenIncludes; // Includes window
+        QListWidget *includesDispo; // List of includes available
+        QListWidget *includesActifs;// List of includes selected
         QGroupBox *ajoutCommentaires; // Checkbox "Add comments"
-        QLineEdit *auteur; // Athor name
+        QLineEdit *auteur; // Author name
         QDateEdit *dateCreation; // Creation date
         QComboBox *license; // Choose license
         QTextEdit *roleClasse; // Class description
