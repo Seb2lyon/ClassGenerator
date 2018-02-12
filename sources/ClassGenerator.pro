@@ -1,11 +1,13 @@
 SOURCES += \
     main.cpp \
     fenprincipale.cpp \
-    fencodegenere.cpp
+    fencodegenere.cpp \
+    fenincludes.cpp
 
 HEADERS += \
     fenprincipale.h \
-    fencodegenere.h
+    fencodegenere.h \
+    fenincludes.h
 
 TRANSLATIONS = ClassGenerator_en.ts ClassGenerator_pl.ts
 

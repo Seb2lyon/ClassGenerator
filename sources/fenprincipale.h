@@ -3,6 +3,7 @@
 
 #include <QApplication>
 #include <QtWidgets>
+#include <vector>
 
 class FenPrincipale : public QWidget
 {
@@ -10,6 +11,9 @@ class FenPrincipale : public QWidget
 
     public :
         FenPrincipale();
+        QCheckBox *getAjoutIncludes();
+        void setIncludesDispo(std::vector<QString> nouvelleListeIncludesDispo, int copieNbrIncludesDispo);
+        void setIncludesActifs(std::vector<QString> nouvelleListeIncludesActifs, int copieNbrIncludesActifs);
 
     public slots :
         void validerFenPrincipale();
@@ -17,10 +21,6 @@ class FenPrincipale : public QWidget
         void genereHeaderGuard();
         void gestionIncludes();
         void gestionAttributs();
-        void ajouterIncludes();
-        void supprimerIncludes();
-        void annulerIncludes();
-        void validerIncludes();
         void fenetreInfo();
 
     private :
@@ -31,10 +31,11 @@ class FenPrincipale : public QWidget
         QCheckBox *genereConstructeur; // Checkbox "Generate default constructor"
         QCheckBox *genereDestructeur; // Checkbox "Generate destructor"
         QCheckBox *ajoutIncludes; // Checkbox "Add includes"
+        int nbrIncludesDispo; // Number of available includes
+        std::vector<QString> listeIncludesDispo; // Array of available includes
+        int nbrIncludesActifs; // Number of selected includes
+        std::vector<QString> listeIncludesActifs; // Array of selected includes
         QCheckBox *ajoutAttributs; // CheckBox "Add attibutes"
-        QDialog *fenIncludes; // Includes window
-        QListWidget *includesDispo; // List of includes available
-        QListWidget *includesActifs;// List of includes selected
         QGroupBox *ajoutCommentaires; // Checkbox "Add comments"
         QLineEdit *auteur; // Author name
         QDateEdit *dateCreation; // Creation date

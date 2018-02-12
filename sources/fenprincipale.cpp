@@ -1,7 +1,10 @@
 #include "fenprincipale.h"
 #include "fencodegenere.h"
+#include "fenincludes.h"
 #include <fstream>
 #include <string>
+
+using namespace std;
 
 FenPrincipale::FenPrincipale():QWidget()
 {
@@ -116,21 +119,24 @@ FenPrincipale::FenPrincipale():QWidget()
 
     this->setLayout(layoutGlobal);
 
-    includesActifs = new QListWidget;
 
-    includesDispo = new QListWidget;
-    includesDispo->setSortingEnabled(true);
+    // Includes lists (selected + available)
 
-    // Includes list file
     std::ifstream fichier("config/includes.conf");
 
     std::string ligne;
+    int occurences = 0;
 
     while(std::getline(fichier, ligne))
     {
         ligne = "<" + ligne + ">";
-        includesDispo->addItem(QString::fromStdString(ligne));
+        listeIncludesDispo.push_back(QString::fromStdString(ligne));
+        ++occurences;
     }
+
+    // Number of includes
+    nbrIncludesDispo = occurences;
+    nbrIncludesActifs = 0;
 
     QObject::connect(quitter, SIGNAL(clicked()), qApp, SLOT(quit()));
     QObject::connect(generer, SIGNAL(clicked()), this, SLOT(validerFenPrincipale()));
@@ -235,12 +241,12 @@ void FenPrincipale::validerFenPrincipale()
             chaine->append(QString("\n\n\n"));
         }
 
-        if(ajoutIncludes->isChecked() && includesActifs->count() != 0)
+        if(ajoutIncludes->isChecked() && nbrIncludesActifs != 0)
         {
-            for(int i = 0; i < includesActifs->count(); i++)
+            for(int i = 0; i < nbrIncludesActifs; i++)
             {
                 chaine->append("#include ");
-                chaine->append(includesActifs->item(i)->text());
+                chaine->append(listeIncludesActifs[i]);
                 chaine->append("\n");
             }
 
@@ -308,7 +314,6 @@ void FenPrincipale::activeHeaderGuard()
         headerGuard->clear();
         headerGuard->setEnabled(false);
     }
-
 }
 
 // Generate Header Guard
@@ -336,95 +341,42 @@ void FenPrincipale::gestionIncludes()
 {
     if(ajoutIncludes->isChecked())
     {
-        fenIncludes = new QDialog;
-        fenIncludes->setFixedSize(450, 450);
-
-        QLabel *titre = new QLabel(tr("Sélectionnez les \"includes\" de la bibliothèque standard C++ que vous souhaitez utiliser : "));
-
-        QPushButton *boutonAjouter = new QPushButton(tr("Ajouter >>"));
-        QPushButton *boutonSupprimer = new QPushButton(tr("<< Supprimer"));
-        QPushButton *boutonAnnuler = new QPushButton(tr("Annuler"));
-        QPushButton *boutonValider = new QPushButton(tr("VALIDER"));
-
-        QVBoxLayout * layoutBoutons = new QVBoxLayout;
-        layoutBoutons->addWidget(boutonAjouter);
-        layoutBoutons->addWidget(boutonSupprimer);
-        layoutBoutons->addWidget(boutonAnnuler);
-
-        QHBoxLayout *layoutIncludes = new QHBoxLayout;
-        layoutIncludes->addWidget(includesDispo);
-        layoutIncludes->addLayout(layoutBoutons);
-        layoutIncludes->addWidget(includesActifs);
-
-        QVBoxLayout *layoutGlobal = new QVBoxLayout;
-        layoutGlobal->addWidget(titre);
-        layoutGlobal->addLayout(layoutIncludes);
-        layoutGlobal->addWidget(boutonValider);
-
-        fenIncludes->setLayout(layoutGlobal);
-
-        QObject::connect(boutonAjouter, SIGNAL(clicked()), this, SLOT(ajouterIncludes()));
-        QObject::connect(boutonSupprimer, SIGNAL(clicked()), this, SLOT(supprimerIncludes()));
-        QObject::connect(boutonAnnuler, SIGNAL(clicked()), this, SLOT(annulerIncludes()));
-        QObject::connect(boutonValider, SIGNAL(clicked()), this, SLOT(validerIncludes()));
-
-        fenIncludes->exec();
+        FenIncludes fenetreIncludes(this, nbrIncludesActifs, listeIncludesActifs, nbrIncludesDispo, listeIncludesDispo);
+        fenetreIncludes.exec();
     }
-}
-
-// Add includes
-void FenPrincipale::ajouterIncludes()
-{
-    if(includesDispo->count() != 0)
-    {
-        includesActifs->addItem(includesDispo->currentItem()->text());
-        includesDispo->takeItem(includesDispo->currentIndex().row());
-    }
-}
-
-// Cancel includes
-void FenPrincipale::supprimerIncludes()
-{
-    if(!includesActifs->selectedItems().isEmpty())
-    {
-        includesDispo->addItem(includesActifs->currentItem()->text());
-        includesActifs->takeItem(includesActifs->currentIndex().row());
-    }
-}
-
-// Cancel all includes
-void FenPrincipale::annulerIncludes()
-{
-    if(includesActifs->count() != 0)
-    {
-        for(int i = 0; i < includesActifs->count(); i++)
-        {
-            includesDispo->addItem(includesActifs->item(i)->text());
-        }
-
-        includesActifs->clear();
-    }
-}
-
-// Validate Includes window
-void FenPrincipale::validerIncludes()
-{
-    if(includesActifs->count() == 0)
-    {
-        ajoutIncludes->setCheckState(Qt::Unchecked);
-    }
-
-    fenIncludes->close();
 }
 
 // Manage Attributes window
 void FenPrincipale::gestionAttributs()
 {
-    // A RENSIGNER
+    // TODO
 }
 
 // Information window
 void FenPrincipale::fenetreInfo()
 {
    QMessageBox::information(this, tr("Information"), tr("<strong>CodeGenerator v. 3.0</strong><br /><br />Programmeur : Seb2lyon<br />Développé entre le 30-01-2018 et le 05-02-2018<br />GNU General Public License v3.0<br /><br /><a href=http://seb2lyon.site11.com>Visitez mon site web !!!</a>"));
+}
+
+// Getter
+QCheckBox *FenPrincipale::getAjoutIncludes()
+{
+    return ajoutIncludes;
+}
+
+// Setter
+void FenPrincipale::setIncludesDispo(vector<QString> nouvelleListeIncludesDispo, int copieNbrIncludesDispo)
+{
+    nbrIncludesDispo = copieNbrIncludesDispo;
+
+    listeIncludesDispo.clear();
+    listeIncludesDispo = nouvelleListeIncludesDispo;
+}
+
+void FenPrincipale::setIncludesActifs(vector<QString> nouvelleListeIncludesActifs, int copieNbrIncludesActifs)
+{
+    nbrIncludesActifs = copieNbrIncludesActifs;
+
+    listeIncludesActifs.clear();
+    listeIncludesActifs = nouvelleListeIncludesActifs;
 }
