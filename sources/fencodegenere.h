@@ -1,7 +1,6 @@
 #ifndef FENCODEGENERE_H
 #define FENCODEGENERE_H
 
-#include <QApplication>
 #include <QtWidgets>
 #include "fenprincipale.h"
 

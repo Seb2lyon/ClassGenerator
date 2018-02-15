@@ -1,5 +1,7 @@
 #include "fencodegenere.h"
 
+using namespace std;
+
 FenCodeGenere::FenCodeGenere(FenPrincipale *fenetre, QString *chaineCode) : QDialog(fenetre)
 {    
     setFixedSize(400, 550);
@@ -16,7 +18,7 @@ FenCodeGenere::FenCodeGenere(FenPrincipale *fenetre, QString *chaineCode) : QDia
     layout->addWidget(codeGenere);
     layout->addWidget(fermer);
 
-    this->setLayout(layout);
+    setLayout(layout);
 
     QObject::connect(fermer, SIGNAL(clicked()), this, SLOT(accept()));
 }

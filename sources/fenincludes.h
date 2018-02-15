@@ -1,7 +1,6 @@
 #ifndef FENINCLUDES_H
 #define FENINCLUDES_H
 
-#include <QApplication>
 #include <QtWidgets>
 #include <vector>
 #include "fenprincipale.h"
@@ -18,6 +17,7 @@ class FenIncludes : public QDialog
         void supprimerIncludes();
         void annulerIncludes();
         void validerIncludes();
+        void rien();
 
     private:
         FenPrincipale *copieFenPrincipale; // Copy of the main windows

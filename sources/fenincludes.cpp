@@ -61,6 +61,8 @@ FenIncludes::FenIncludes(FenPrincipale *fenetre, int nbrIncludesActifs, vector<Q
     QObject::connect(includesActifs, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(supprimerIncludes()));
     QObject::connect(boutonAnnuler, SIGNAL(clicked()), this, SLOT(annulerIncludes()));
     QObject::connect(boutonValider, SIGNAL(clicked()), this, SLOT(validerIncludes()));
+    QObject::connect(this, SIGNAL(rejected()), this, SLOT(rien()));
+
 }
 
 // Add includes
@@ -123,6 +125,16 @@ void FenIncludes::validerIncludes()
 
     copieFenPrincipale->setIncludesDispo(copieListeIncludesDispo, nbrIncludesDispo);
     copieFenPrincipale->setIncludesActifs(copieListeIncludesActifs, nbrIncludesActifs);
+
+    this->accept();
+}
+
+void FenIncludes::rien()
+{
+    if(copieListeIncludesActifs.size() == 0)
+    {
+        copieFenPrincipale->getAjoutIncludes()->setCheckState(Qt::Unchecked);
+    }
 
     this->accept();
 }

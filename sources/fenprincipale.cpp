@@ -1,6 +1,7 @@
 #include "fenprincipale.h"
 #include "fencodegenere.h"
 #include "fenincludes.h"
+#include "fenattributs.h"
 #include <fstream>
 #include <string>
 
@@ -349,7 +350,11 @@ void FenPrincipale::gestionIncludes()
 // Manage Attributes window
 void FenPrincipale::gestionAttributs()
 {
-    // TODO
+    if(ajoutAttributs->isChecked())
+    {
+        FenAttributs fenetreAttributs(this);
+        fenetreAttributs.exec();
+    }
 }
 
 // Information window
