@@ -4,6 +4,8 @@ using namespace std;
 
 FenAttributs::FenAttributs(FenPrincipale *fenetre) : QDialog(fenetre)
 {
+    copieFenPrincipale = fenetre;
+
     setFixedSize(440, 450);
 
     QValidator *validator = new QRegularExpressionValidator(QRegularExpression("[_A-Za-z0-9]{0,32}"));
@@ -115,7 +117,8 @@ FenAttributs::FenAttributs(FenPrincipale *fenetre) : QDialog(fenetre)
     QObject::connect(modifier, SIGNAL(clicked()), this, SLOT(modificationAttribut()));
     QObject::connect(supprimer, SIGNAL(clicked()), this, SLOT(suppressionAttribut()));
     QObject::connect(toutSupprimer, SIGNAL(clicked()), this, SLOT(suppressionTousAttributs()));
-    QObject::connect(valider, SIGNAL(clicked()), this, SLOT(close()));
+    QObject::connect(valider, SIGNAL(clicked()), this, SLOT(validerFenAttributs()));
+    QObject::connect(this, SIGNAL(rejected()), this, SLOT(rien()));
 }
 
 // Clear form
@@ -127,6 +130,7 @@ void FenAttributs::annulerNvAttribut()
     pointeur->setChecked(false);
     vectorAttribut->setChecked(false);
     privateAttribut->setChecked(true);
+    ajouter->setText(tr("Ajouter"));
 }
 
 // Add new attribute
@@ -184,11 +188,26 @@ void FenAttributs::ajouterNvAttribut()
 
         annulerNvAttribut();
 
-        ajouter->setText(tr("Ajouter"));
+        int nombreAttributs = listeAttributsCrees->count();
+
+        for(int i = 0; i < nombreAttributs; ++i)
+        {
+            QString visibilite;
+
+            if(tableauAttributs[i].privateAttribut == true)
+            {
+                visibilite = "private";
+            }
+            else
+            {
+                visibilite = "protected";
+            }
+
+            listeAttributsCrees->item(i)->setToolTip(visibilite);
+        }
     }
 
                                                 /* TODO :
-                                                 * Show ToolTip
                                                  * Control of the input : no identical name  */
 }
 
@@ -233,7 +252,7 @@ void FenAttributs::modificationAttribut()
 
 
 
-   // TODO
+   // TODO update list and array
 
 
 
@@ -242,14 +261,134 @@ void FenAttributs::modificationAttribut()
     ajouter->setText(tr("Modifier"));
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// DONE
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Delete selected attribute
 void FenAttributs::suppressionAttribut()
 {
+    if(listeAttributsCrees->count() != 0)
+    {
+        int positionAttribut = listeAttributsCrees->currentRow();
 
+        nomAttribut->setStyleSheet("background: rgb(255,255,255)");
+
+        listeAttributsCrees->takeItem(positionAttribut);
+        tableauAttributs.erase(tableauAttributs.begin() + positionAttribut);
+
+        annulerNvAttribut();
+
+        if(listeAttributsCrees->count() == 0)
+        {
+            modifier->setEnabled(false);
+            supprimer->setEnabled(false);
+            toutSupprimer->setEnabled(false);
+        }
+        else if(listeAttributsCrees->selectedItems().isEmpty())
+        {
+            modifier->setEnabled(false);
+            supprimer->setEnabled(false);
+        }
+    }
 }
 
 // Cancel all the attributes in the list
 void FenAttributs::suppressionTousAttributs()
 {
+    if(listeAttributsCrees->count() != 0)
+    {
+        nomAttribut->setStyleSheet("background: rgb(255,255,255)");
+        listeAttributsCrees->clear();
+        tableauAttributs.clear();
+        annulerNvAttribut();
+        modifier->setEnabled(false);
+        supprimer->setEnabled(false);
+        toutSupprimer->setEnabled(false);
+    }
+}
 
+
+
+
+
+
+
+// TODO transfert array in the main window + show the list already made when opening
+
+
+
+
+
+
+
+
+
+
+void FenAttributs::validerFenAttributs()
+{
+    if(listeAttributsCrees->count() == 0)
+    {
+        copieFenPrincipale->getAjoutAttributs()->setCheckState(Qt::Unchecked);
+    }
+
+    this->accept();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// DONE
+
+
+
+
+
+
+
+
+
+
+
+void FenAttributs::rien()
+{
+    if(tableauAttributs.size() == 0)
+    {
+        copieFenPrincipale->getAjoutAttributs()->setCheckState(Qt::Unchecked);
+    }
+
+    this->accept();
 }

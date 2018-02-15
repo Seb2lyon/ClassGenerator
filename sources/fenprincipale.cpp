@@ -360,13 +360,18 @@ void FenPrincipale::gestionAttributs()
 // Information window
 void FenPrincipale::fenetreInfo()
 {
-   QMessageBox::information(this, tr("Information"), tr("<strong>CodeGenerator v. 3.0</strong><br /><br />Programmeur : Seb2lyon<br />Développé entre le 30-01-2018 et le 05-02-2018<br />GNU General Public License v3.0<br /><br /><a href=http://seb2lyon.site11.com>Visitez mon site web !!!</a>"));
+   QMessageBox::information(this, tr("Information"), tr("<strong>CodeGenerator v. 4.0</strong><br /><br />Programmeur : Seb2lyon<br />Développé entre le 30-01-2018 et le 15-02-2018<br />GNU General Public License v3.0<br /><br /><a href=http://seb2lyon.site11.com>Visitez mon site web !!!</a>"));
 }
 
 // Getter
 QCheckBox *FenPrincipale::getAjoutIncludes()
 {
     return ajoutIncludes;
+}
+
+QCheckBox *FenPrincipale::getAjoutAttributs()
+{
+    return ajoutAttributs;
 }
 
 // Setter

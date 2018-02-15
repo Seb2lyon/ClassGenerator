@@ -30,8 +30,11 @@ class FenAttributs : public QDialog
         void modificationAttribut();
         void suppressionAttribut();
         void suppressionTousAttributs();
+        void validerFenAttributs();
+        void rien();
 
     private:
+        FenPrincipale *copieFenPrincipale; // Copy of the main windows
         QComboBox *listeTypes; // Liste of attribute's type
         QLineEdit *nomAttribut; // Name of the attribute
         QCheckBox *pointeur; // Checkbox pointer
