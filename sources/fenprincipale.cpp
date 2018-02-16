@@ -45,6 +45,12 @@ FenPrincipale::FenPrincipale():QWidget()
     ajoutIncludes->setText(tr("Aj&outer des includes"));
     ajoutAttributs = new QCheckBox;
     ajoutAttributs->setText(tr("Ajo&uter des attributs"));
+    genereAccesseurs = new QCheckBox;
+    genereAccesseurs->setText(tr("&Générer accesseurs"));
+    if(!ajoutAttributs->isChecked())
+    {
+        genereAccesseurs->setEnabled(false);
+    }
 
     // Form Layout
     QFormLayout *optionsLayout = new QFormLayout;
@@ -54,6 +60,7 @@ FenPrincipale::FenPrincipale():QWidget()
     optionsLayout->addRow(genereDestructeur);
     optionsLayout->addRow(ajoutIncludes);
     optionsLayout->addRow(ajoutAttributs);
+    optionsLayout->addRow(genereAccesseurs);
 
     // Set the form layout into QGroupBox
     QGroupBox *options = new QGroupBox(tr("Options"));
@@ -123,12 +130,12 @@ FenPrincipale::FenPrincipale():QWidget()
 
     // Includes lists (selected + available)
 
-    std::ifstream fichier("config/includes.conf");
+    ifstream fichier("config/includes.conf");
 
-    std::string ligne;
+    string ligne;
     int occurences = 0;
 
-    while(std::getline(fichier, ligne))
+    while(getline(fichier, ligne))
     {
         ligne = "<" + ligne + ">";
         listeIncludesDispo.push_back(QString::fromStdString(ligne));
@@ -138,6 +145,9 @@ FenPrincipale::FenPrincipale():QWidget()
     // Number of includes
     nbrIncludesDispo = occurences;
     nbrIncludesActifs = 0;
+
+    // Number of attributes
+    nbrAttributs = 0;
 
     QObject::connect(quitter, SIGNAL(clicked()), qApp, SLOT(quit()));
     QObject::connect(generer, SIGNAL(clicked()), this, SLOT(validerFenPrincipale()));
@@ -282,7 +292,12 @@ void FenPrincipale::validerFenPrincipale()
             chaine->append(QString("();\n"));
         }
 
-        chaine->append(QString("\n\n    protected:\n\n\n    private:\n\n\n};\n\n#endif\n\n"));
+        chaine->append(QString("\n\n    protected:\n\n\n    private:\n\n\n};\n\n"));
+
+        if(protegeHeader->isChecked())
+        {
+            chaine->append(QString("#endif\n\n"));
+        }
 
         FenCodeGenere fenetreCode(this, chaine);
 
@@ -352,15 +367,20 @@ void FenPrincipale::gestionAttributs()
 {
     if(ajoutAttributs->isChecked())
     {
-        FenAttributs fenetreAttributs(this);
+        FenAttributs fenetreAttributs(this, nbrAttributs, listeAttributs);
         fenetreAttributs.exec();
+    }
+    else
+    {
+        genereAccesseurs->setChecked(false);
+        genereAccesseurs->setEnabled(false);
     }
 }
 
 // Information window
 void FenPrincipale::fenetreInfo()
 {
-   QMessageBox::information(this, tr("Information"), tr("<strong>CodeGenerator v. 4.0</strong><br /><br />Programmeur : Seb2lyon<br />Développé entre le 30-01-2018 et le 15-02-2018<br />GNU General Public License v3.0<br /><br /><a href=http://seb2lyon.site11.com>Visitez mon site web !!!</a>"));
+   QMessageBox::information(this, tr("Information"), tr("<strong>CodeGenerator v. 4.0</strong><br /><br />Programmeur : Seb2lyon<br />Développé entre le 30-01-2018 et le 16-02-2018<br />GNU General Public License v3.0<br /><br /><a href=http://seb2lyon.site11.com>Visitez mon site web !!!</a>"));
 }
 
 // Getter
@@ -372,6 +392,11 @@ QCheckBox *FenPrincipale::getAjoutIncludes()
 QCheckBox *FenPrincipale::getAjoutAttributs()
 {
     return ajoutAttributs;
+}
+
+QCheckBox *FenPrincipale::getGenereAccesseurs()
+{
+    return genereAccesseurs;
 }
 
 // Setter
@@ -389,4 +414,12 @@ void FenPrincipale::setIncludesActifs(vector<QString> nouvelleListeIncludesActif
 
     listeIncludesActifs.clear();
     listeIncludesActifs = nouvelleListeIncludesActifs;
+}
+
+void FenPrincipale::setAttributs(vector<Attribut> nouvelleListeAttributs, int copieNbrAttributs)
+{
+    nbrAttributs = copieNbrAttributs;
+
+    listeAttributs.clear();
+    listeAttributs = nouvelleListeAttributs;
 }

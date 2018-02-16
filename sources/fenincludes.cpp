@@ -4,6 +4,8 @@ using namespace std;
 
 FenIncludes::FenIncludes(FenPrincipale *fenetre, int nbrIncludesActifs, vector<QString>listeIncludesActifs, int nbrIncludesDispo, vector<QString>listeIncludesDispo) : QDialog(fenetre)
 {
+    setWhatsThis(QString(tr("Choisissez les \"includes\" que vous voulez faire apparaitre dans votre code")));
+
     // Create all the copies
     copieFenPrincipale = fenetre;
     copieListeIncludesActifs = listeIncludesActifs;
@@ -129,6 +131,7 @@ void FenIncludes::validerIncludes()
     this->accept();
 }
 
+// Manage escape and cross close window
 void FenIncludes::rien()
 {
     if(copieListeIncludesActifs.size() == 0)

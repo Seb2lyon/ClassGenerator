@@ -4,6 +4,7 @@
 #include <QApplication>
 #include <QtWidgets>
 #include <vector>
+#include "fenattributs.h"
 
 class FenPrincipale : public QWidget
 {
@@ -13,8 +14,10 @@ class FenPrincipale : public QWidget
         FenPrincipale();
         QCheckBox *getAjoutIncludes();
         QCheckBox *getAjoutAttributs();
+        QCheckBox *getGenereAccesseurs();
         void setIncludesDispo(std::vector<QString> nouvelleListeIncludesDispo, int copieNbrIncludesDispo);
         void setIncludesActifs(std::vector<QString> nouvelleListeIncludesActifs, int copieNbrIncludesActifs);
+        void setAttributs(std::vector<Attribut> nouvelleListeAttributs, int copieNbrAttributs);
 
     public slots :
         void validerFenPrincipale();
@@ -37,6 +40,9 @@ class FenPrincipale : public QWidget
         int nbrIncludesActifs; // Number of selected includes
         std::vector<QString> listeIncludesActifs; // Array of selected includes
         QCheckBox *ajoutAttributs; // CheckBox "Add attibutes"
+        int nbrAttributs; // Number of attributes created
+        std::vector<Attribut> listeAttributs; // Array of attributes created
+        QCheckBox *genereAccesseurs; // Checkbox "Generate accessors"
         QGroupBox *ajoutCommentaires; // Checkbox "Add comments"
         QLineEdit *auteur; // Author name
         QDateEdit *dateCreation; // Creation date

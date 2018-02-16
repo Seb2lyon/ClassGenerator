@@ -2,9 +2,12 @@
 
 using namespace std;
 
-FenAttributs::FenAttributs(FenPrincipale *fenetre) : QDialog(fenetre)
+FenAttributs::FenAttributs(FenPrincipale *fenetre, int nbrAttributs, vector<Attribut> listeAttributs) : QDialog(fenetre)
 {
+    // Create all the copies
     copieFenPrincipale = fenetre;
+    copieNbrAttributs = nbrAttributs;
+    copieListeAttributs = listeAttributs;
 
     setFixedSize(440, 450);
 
@@ -35,16 +38,16 @@ FenAttributs::FenAttributs(FenPrincipale *fenetre) : QDialog(fenetre)
     pointeur = new QCheckBox;
     vectorAttribut = new QCheckBox;
     privateAttribut = new QRadioButton;
-    privateAttribut->setText("private");
+    privateAttribut->setText("pr&ivate");
     privateAttribut->setChecked(true);
     protectedAttribut = new QRadioButton;
-    protectedAttribut->setText("protected");
+    protectedAttribut->setText("pr&otected");
 
     QFormLayout *formulaire = new QFormLayout;
-    formulaire->addRow(tr("Type : "), listeTypes);
-    formulaire->addRow(tr("Nom : "), nomAttribut);
-    formulaire->addRow(tr("Pointeur : "), pointeur);
-    formulaire->addRow(tr("Vector : "), vectorAttribut);
+    formulaire->addRow(tr("&Type : "), listeTypes);
+    formulaire->addRow(tr("&Nom : "), nomAttribut);
+    formulaire->addRow(tr("&Pointeur : "), pointeur);
+    formulaire->addRow(tr("&Vector : "), vectorAttribut);
     formulaire->addRow(tr("Visibilité : "), privateAttribut);
     formulaire->addRow("", protectedAttribut);
 
@@ -140,75 +143,108 @@ void FenAttributs::ajouterNvAttribut()
     int pos = 0;
     QString inputAttribut(nomAttribut->text());
 
+    // If attribute has no name
     if(nomAttribut->text().isEmpty())
     {
         nomAttribut->setStyleSheet("background: rgb(252,254,171)");
         nomAttribut->setFocus(Qt::OtherFocusReason);
         QMessageBox::warning(this, tr("Attention"), tr("Vous devez renseigner le nom de l'attribut"));
     }
+    // If attribute's name is not valid
     else if(validator->validate(inputAttribut, pos) != QValidator::Acceptable)
     {
         nomAttribut->setStyleSheet("background: rgb(252,254,171)");
         nomAttribut->setFocus(Qt::OtherFocusReason);
         QMessageBox::warning(this, tr("Attention"), tr("Le nom de l'attribut est invalide :\nLe nom ne doit pas commencer par un chiffre"));
     }
+    // If it's OK
     else
     {
-        nomAttribut->setStyleSheet("background: rgb(255,255,255)");
-        Attribut attribut;
-        attribut.type = listeTypes->currentText();
-        attribut.nom = nomAttribut->text();
-        attribut.pointeur = pointeur->isChecked();
-        attribut.vector = vectorAttribut->isChecked();
-        attribut.privateAttribut = privateAttribut->isChecked();
-
-        QString attributFormate;
-        if(attribut.vector)
-        {
-            attributFormate.append("vector<");
-            attributFormate.append(attribut.type);
-            attributFormate.append(">");
-        }
-        else
-        {
-            attributFormate.append(attribut.type);
-        }
-        attributFormate.append(" ");
-        if(attribut.pointeur == true)
-        {
-            attributFormate.append("*");
-        }
-        attributFormate.append(attribut.nom);
-
-        listeAttributsCrees->addItem(attributFormate);
-
-        tableauAttributs.push_back(attribut);
-
-        toutSupprimer->setEnabled(true);
-
-        annulerNvAttribut();
-
         int nombreAttributs = listeAttributsCrees->count();
+        bool dejaPris(false);
 
         for(int i = 0; i < nombreAttributs; ++i)
         {
-            QString visibilite;
-
-            if(tableauAttributs[i].privateAttribut == true)
+            if(copieListeAttributs[i].nom == nomAttribut->text())
             {
-                visibilite = "private";
+                dejaPris = true;
+            }
+        }
+
+        // If the name is already taken
+        if(dejaPris && ajouter->text() == QString(tr("Ajouter")))
+        {
+            nomAttribut->setStyleSheet("background: rgb(252,254,171)");
+            nomAttribut->setFocus(Qt::OtherFocusReason);
+            QMessageBox::warning(this, tr("Attention"), tr("Le nom de l'attribut est déjà pris\nVeuillez en saisir un nouveau"));
+        }
+        else
+        {
+            nomAttribut->setStyleSheet("background: rgb(255,255,255)");
+            Attribut attribut;
+            attribut.type = listeTypes->currentText();
+            attribut.nom = nomAttribut->text();
+            attribut.pointeur = pointeur->isChecked();
+            attribut.vector = vectorAttribut->isChecked();
+            attribut.privateAttribut = privateAttribut->isChecked();
+
+            QString attributFormate;
+            if(attribut.vector)
+            {
+                attributFormate.append("vector<");
+                attributFormate.append(attribut.type);
+                attributFormate.append(">");
             }
             else
             {
-                visibilite = "protected";
+                attributFormate.append(attribut.type);
+            }
+            attributFormate.append(" ");
+            if(attribut.pointeur == true)
+            {
+                attributFormate.append("*");
+            }
+            attributFormate.append(attribut.nom);
+
+            // If this is a modification
+            if(ajouter->text() == QString(tr("Modifier")))
+            {
+                listeAttributsCrees->takeItem(positionAttribut);
+                listeAttributsCrees->insertItem(positionAttribut, attributFormate);
+                copieListeAttributs[positionAttribut] = attribut;
+                listeAttributsCrees->setCurrentRow(positionAttribut);
+            }
+            // If this is a creation
+            else
+            {
+                listeAttributsCrees->addItem(attributFormate);
+                copieListeAttributs.push_back(attribut);
             }
 
-            listeAttributsCrees->item(i)->setToolTip(visibilite);
+            toutSupprimer->setEnabled(true);
+
+            annulerNvAttribut();
+
+            nombreAttributs = listeAttributsCrees->count();
+
+            // Show the Tool Tip
+            for(int i = 0; i < nombreAttributs; ++i)
+            {
+                QString visibilite;
+
+                if(copieListeAttributs[i].privateAttribut == true)
+                {
+                    visibilite = "private";
+                }
+                else
+                {
+                    visibilite = "protected";
+                }
+
+                listeAttributsCrees->item(i)->setToolTip(visibilite);
+            }
         }
     }
-
-                                                /* TODO :
-                                                 * Control of the input : no identical name  */
 }
 
 // Select attribute in the list
@@ -224,12 +260,12 @@ void FenAttributs::selectionAttribut()
 // Modify selected attribute
 void FenAttributs::modificationAttribut()
 {
-    int positionAttribut = listeAttributsCrees->currentRow();
-
     nomAttribut->setStyleSheet("background: rgb(255,255,255)");
 
+    positionAttribut = listeAttributsCrees->currentRow();
+
     Attribut attribut;
-    attribut = tableauAttributs[positionAttribut];
+    attribut = copieListeAttributs[positionAttribut];
 
     nomAttribut->setText(attribut.nom);
     listeTypes->setCurrentText(attribut.type);
@@ -244,62 +280,20 @@ void FenAttributs::modificationAttribut()
         protectedAttribut->setChecked(true);
     }
 
-
-
-
-
-
-
-
-
-   // TODO update list and array
-
-
-
-
-
     ajouter->setText(tr("Modifier"));
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// DONE
-
-
-
-
-
-
-
-
-
-
-
-
 
 // Delete selected attribute
 void FenAttributs::suppressionAttribut()
 {
     if(listeAttributsCrees->count() != 0)
     {
-        int positionAttribut = listeAttributsCrees->currentRow();
+        positionAttribut = listeAttributsCrees->currentRow();
 
         nomAttribut->setStyleSheet("background: rgb(255,255,255)");
 
         listeAttributsCrees->takeItem(positionAttribut);
-        tableauAttributs.erase(tableauAttributs.begin() + positionAttribut);
+        copieListeAttributs.erase(copieListeAttributs.begin() + positionAttribut);
 
         annulerNvAttribut();
 
@@ -324,7 +318,7 @@ void FenAttributs::suppressionTousAttributs()
     {
         nomAttribut->setStyleSheet("background: rgb(255,255,255)");
         listeAttributsCrees->clear();
-        tableauAttributs.clear();
+        copieListeAttributs.clear();
         annulerNvAttribut();
         modifier->setEnabled(false);
         supprimer->setEnabled(false);
@@ -332,62 +326,36 @@ void FenAttributs::suppressionTousAttributs()
     }
 }
 
-
-
-
-
-
-
-// TODO transfert array in the main window + show the list already made when opening
-
-
-
-
-
-
-
-
-
-
+// Validate attribute's window
 void FenAttributs::validerFenAttributs()
 {
     if(listeAttributsCrees->count() == 0)
     {
         copieFenPrincipale->getAjoutAttributs()->setCheckState(Qt::Unchecked);
+        copieFenPrincipale->getGenereAccesseurs()->setEnabled(false);
+        copieFenPrincipale->getGenereAccesseurs()->setChecked(false);
+    }
+    else
+    {
+        copieFenPrincipale->getGenereAccesseurs()->setEnabled(true);
+        copieFenPrincipale->setAttributs(copieListeAttributs, listeAttributsCrees->count());
     }
 
     this->accept();
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-// DONE
-
-
-
-
-
-
-
-
-
-
-
+// Manage escape and cross close window
 void FenAttributs::rien()
 {
-    if(tableauAttributs.size() == 0)
+    if(copieListeAttributs.size() == 0)
     {
         copieFenPrincipale->getAjoutAttributs()->setCheckState(Qt::Unchecked);
+        copieFenPrincipale->getGenereAccesseurs()->setEnabled(false);
+        copieFenPrincipale->getGenereAccesseurs()->setChecked(false);
+    }
+    else
+    {
+        copieFenPrincipale->getGenereAccesseurs()->setEnabled(true);
     }
 
     this->accept();

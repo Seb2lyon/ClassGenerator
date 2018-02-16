@@ -21,7 +21,7 @@ class FenAttributs : public QDialog
     Q_OBJECT
 
     public:
-        FenAttributs(FenPrincipale *fenetre);
+        FenAttributs(FenPrincipale *fenetre, int nbrAttributs, std::vector<Attribut> listeAttributs);
 
     public slots:
         void ajouterNvAttribut();
@@ -43,8 +43,10 @@ class FenAttributs : public QDialog
         QRadioButton *protectedAttribut; // Radio button protected attribute
         QPushButton *ajouter; // Add button
         QListWidget *listeAttributsCrees; // List of the created attributes
-        std::vector<Attribut> tableauAttributs; // Array of the created attributes
+        int copieNbrAttributs; // Number of attributes created
+        std::vector<Attribut> copieListeAttributs; // Array of the created attributes
         QPushButton *modifier; // Modify button
+        int positionAttribut; // Row of the attribute to modify
         QPushButton *supprimer; // Delete button
         QPushButton *toutSupprimer; // Delete all button
 };
