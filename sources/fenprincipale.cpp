@@ -252,6 +252,7 @@ void FenPrincipale::validerFenPrincipale()
             chaine->append(QString("\n\n\n"));
         }
 
+        // Checkbox checked : Add includes
         if(ajoutIncludes->isChecked() && nbrIncludesActifs != 0)
         {
             for(int i = 0; i < nbrIncludesActifs; i++)
@@ -292,8 +293,24 @@ void FenPrincipale::validerFenPrincipale()
             chaine->append(QString("();\n"));
         }
 
-        chaine->append(QString("\n\n    protected:\n\n\n    private:\n\n\n};\n\n"));
+        // Checkbox checked : Add attributes
+        chaine->append(QString("\n\n    protected:\n"));
 
+        if(ajoutAttributs->isChecked())
+        {
+            chaine->append(ajoutAttributsDansCode(false));
+        }
+
+        chaine->append(QString("\n\n    private:\n"));
+
+        if(ajoutAttributs->isChecked())
+        {
+            chaine->append(ajoutAttributsDansCode(true));
+        }
+
+        chaine->append(QString("\n\n};\n\n"));
+
+        // End of generated code
         if(protegeHeader->isChecked())
         {
             chaine->append(QString("#endif\n\n"));
@@ -381,6 +398,46 @@ void FenPrincipale::gestionAttributs()
 void FenPrincipale::fenetreInfo()
 {
    QMessageBox::information(this, tr("Information"), tr("<strong>CodeGenerator v. 4.0</strong><br /><br />Programmeur : Seb2lyon<br />Développé entre le 30-01-2018 et le 16-02-2018<br />GNU General Public License v3.0<br /><br /><a href=http://seb2lyon.site11.com>Visitez mon site web !!!</a>"));
+}
+
+// Add attributes in the code
+QString *FenPrincipale::ajoutAttributsDansCode(bool etat)
+{
+    QString *chaine = new QString;
+
+    for(int i = 0; i < nbrAttributs; ++i)
+    {
+        if(listeAttributs[i].privateAttribut == etat)
+        {
+            chaine->append(QString("        "));
+            if(listeAttributs[i].type == "string" || listeAttributs[i].vector == true)
+            {
+                chaine->append(QString("std::"));
+            }
+            if(listeAttributs[i].vector == true)
+            {
+                chaine->append(QString("vector<"));
+                if(listeAttributs[i].type == "string")
+                {
+                    chaine->append(QString("std::"));
+                }
+            }
+            chaine->append(QString(listeAttributs[i].type));
+            if(listeAttributs[i].vector == true)
+            {
+                chaine->append(QString(">"));
+            }
+            chaine->append(QString(" "));
+            if(listeAttributs[i].pointeur == true)
+            {
+                chaine->append(QString("*"));
+            }
+            chaine->append(QString(listeAttributs[i].nom));
+            chaine->append(QString(";\n"));
+        }
+    }
+
+    return chaine;
 }
 
 // Getter

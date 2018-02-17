@@ -22,6 +22,7 @@ class FenPrincipale : public QWidget
 
     public :
         FenPrincipale();
+        QString *ajoutAttributsDansCode(bool etat);
         QCheckBox *getAjoutIncludes();
         QCheckBox *getAjoutAttributs();
         QCheckBox *getGenereAccesseurs();

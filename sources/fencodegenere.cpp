@@ -7,9 +7,10 @@ FenCodeGenere::FenCodeGenere(FenPrincipale *fenetre, QString *chaineCode) : QDia
     setFixedSize(400, 550);
 
     QTextEdit *codeGenere = new QTextEdit;
-    codeGenere->setText(*chaineCode);
+    codeGenere->setPlainText(*chaineCode);
     codeGenere->setReadOnly(true);
     codeGenere->setFont(QFont("Courier", 9));
+    codeGenere->setLineWrapMode(QTextEdit::NoWrap);
 
     QPushButton *fermer = new QPushButton(tr("Fermer"));
     fermer->setFixedHeight(25);
