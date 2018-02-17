@@ -4,8 +4,18 @@
 #include <QApplication>
 #include <QtWidgets>
 #include <vector>
-#include "fenattributs.h"
 
+// Structure Attribute
+struct Attribut
+{
+    QString type;
+    QString nom;
+    bool pointeur;
+    bool vector;
+    bool privateAttribut;
+};
+
+// Class of the main window
 class FenPrincipale : public QWidget
 {
     Q_OBJECT

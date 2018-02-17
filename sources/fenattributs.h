@@ -5,23 +5,12 @@
 #include <vector>
 #include "fenprincipale.h"
 
-// Structure Attribute
-struct Attribut
-{
-    QString type;
-    QString nom;
-    bool pointeur;
-    bool vector;
-    bool privateAttribut;
-};
-
-// Class of the attributes' window
 class FenAttributs : public QDialog
 {
     Q_OBJECT
 
     public:
-        FenAttributs(FenPrincipale *fenetre, int nbrAttributs, std::vector<Attribut> listeAttributs);
+        FenAttributs(FenPrincipale *fenetre, int nbrAttributs, std::vector<Attribut> tableauAttributs);
 
     public slots:
         void ajouterNvAttribut();

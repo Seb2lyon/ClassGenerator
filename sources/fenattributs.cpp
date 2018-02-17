@@ -2,12 +2,12 @@
 
 using namespace std;
 
-FenAttributs::FenAttributs(FenPrincipale *fenetre, int nbrAttributs, vector<Attribut> listeAttributs) : QDialog(fenetre)
+FenAttributs::FenAttributs(FenPrincipale *fenetre, int nbrAttributs, vector<Attribut> tableauAttributs) : QDialog(fenetre)
 {
     // Create all the copies
     copieFenPrincipale = fenetre;
     copieNbrAttributs = nbrAttributs;
-    copieListeAttributs = listeAttributs;
+    copieListeAttributs = tableauAttributs;
 
     setFixedSize(440, 450);
 
@@ -71,6 +71,41 @@ FenAttributs::FenAttributs(FenPrincipale *fenetre, int nbrAttributs, vector<Attr
 
     // List of attributes created
     listeAttributsCrees = new QListWidget;
+
+    for(int i = 0; i < copieNbrAttributs; ++i)
+    {
+        QString attributFormate;
+        if(copieListeAttributs[i].vector)
+        {
+            attributFormate.append("vector<");
+            attributFormate.append(copieListeAttributs[i].type);
+            attributFormate.append(">");
+        }
+        else
+        {
+            attributFormate.append(copieListeAttributs[i].type);
+        }
+        attributFormate.append(" ");
+        if(copieListeAttributs[i].pointeur == true)
+        {
+            attributFormate.append("*");
+        }
+        attributFormate.append(copieListeAttributs[i].nom);
+
+        listeAttributsCrees->addItem(attributFormate);
+
+        QString visibilite;
+        if(copieListeAttributs[i].privateAttribut == true)
+        {
+            visibilite = "private";
+        }
+        else
+        {
+            visibilite = "protected";
+        }
+
+        listeAttributsCrees->item(i)->setToolTip(visibilite);
+    }
 
     QVBoxLayout *modifierSupprimer = new QVBoxLayout;
 
@@ -172,7 +207,7 @@ void FenAttributs::ajouterNvAttribut()
         }
 
         // If the name is already taken
-        if(dejaPris && ajouter->text() == QString(tr("Ajouter")))
+        if(dejaPris && (ajouter->text() == QString(tr("Ajouter")) || (ajouter->text() == QString(tr("Modifier")) && nomAttribut->text() != copieListeAttributs[positionAttribut].nom)))
         {
             nomAttribut->setStyleSheet("background: rgb(252,254,171)");
             nomAttribut->setFocus(Qt::OtherFocusReason);
@@ -338,8 +373,9 @@ void FenAttributs::validerFenAttributs()
     else
     {
         copieFenPrincipale->getGenereAccesseurs()->setEnabled(true);
-        copieFenPrincipale->setAttributs(copieListeAttributs, listeAttributsCrees->count());
     }
+
+    copieFenPrincipale->setAttributs(copieListeAttributs, listeAttributsCrees->count());
 
     this->accept();
 }
