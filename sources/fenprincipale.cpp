@@ -522,6 +522,11 @@ QCheckBox *FenPrincipale::getGenereAccesseurs()
     return genereAccesseurs;
 }
 
+vector<Attribut> FenPrincipale::getListeAttributs()
+{
+    return listeAttributs;
+}
+
 // Setter
 void FenPrincipale::setIncludesDispo(vector<QString> nouvelleListeIncludesDispo, int copieNbrIncludesDispo)
 {

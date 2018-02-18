@@ -2,7 +2,7 @@
 
 using namespace std;
 
-FenAttributs::FenAttributs(FenPrincipale *fenetre, int nbrAttributs, vector<Attribut> tableauAttributs) : QDialog(fenetre)
+FenAttributs::FenAttributs(FenPrincipale *fenetre, int nbrAttributs, vector<Attribut> tableauAttributs) : QDialog(fenetre, Qt::WindowTitleHint | Qt::WindowSystemMenuHint)
 {
     // Create all the copies
     copieFenPrincipale = fenetre;
@@ -383,7 +383,7 @@ void FenAttributs::validerFenAttributs()
 // Manage escape and cross close window
 void FenAttributs::rien()
 {
-    if(copieListeAttributs.size() == 0)
+    if(copieFenPrincipale->getListeAttributs().size() == 0)
     {
         copieFenPrincipale->getAjoutAttributs()->setCheckState(Qt::Unchecked);
         copieFenPrincipale->getGenereAccesseurs()->setEnabled(false);

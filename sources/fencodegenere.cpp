@@ -2,7 +2,7 @@
 
 using namespace std;
 
-FenCodeGenere::FenCodeGenere(FenPrincipale *fenetre, QString *chaineCode) : QDialog(fenetre)
+FenCodeGenere::FenCodeGenere(FenPrincipale *fenetre, QString *chaineCode) : QDialog(fenetre, Qt::WindowTitleHint | Qt::WindowSystemMenuHint)
 {    
     setFixedSize(450, 550);
 

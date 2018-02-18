@@ -26,6 +26,7 @@ class FenPrincipale : public QWidget
         QCheckBox *getAjoutIncludes();
         QCheckBox *getAjoutAttributs();
         QCheckBox *getGenereAccesseurs();
+        std::vector<Attribut> getListeAttributs();
         void setIncludesDispo(std::vector<QString> nouvelleListeIncludesDispo, int copieNbrIncludesDispo);
         void setIncludesActifs(std::vector<QString> nouvelleListeIncludesActifs, int copieNbrIncludesActifs);
         void setAttributs(std::vector<Attribut> nouvelleListeAttributs, int copieNbrAttributs);

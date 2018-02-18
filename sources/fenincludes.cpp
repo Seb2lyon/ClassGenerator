@@ -2,7 +2,7 @@
 
 using namespace std;
 
-FenIncludes::FenIncludes(FenPrincipale *fenetre, int nbrIncludesActifs, vector<QString>listeIncludesActifs, int nbrIncludesDispo, vector<QString>listeIncludesDispo) : QDialog(fenetre)
+FenIncludes::FenIncludes(FenPrincipale *fenetre, int nbrIncludesActifs, vector<QString>listeIncludesActifs, int nbrIncludesDispo, vector<QString>listeIncludesDispo) : QDialog(fenetre, Qt::WindowTitleHint | Qt::WindowSystemMenuHint)
 {
     setWhatsThis(QString(tr("Choisissez les \"includes\" que vous voulez faire apparaitre dans votre code")));
 
