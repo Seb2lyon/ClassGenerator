@@ -187,6 +187,13 @@ void FenPrincipale::validerFenPrincipale()
         nomClasseMere->setFocus(Qt::OtherFocusReason);
         QMessageBox::warning(this, tr("Attention"), tr("Le nom de la Classe mère est invalide :\nLe nom ne doit pas commencer par un chiffre"));
     }
+    else if(nomClasseMere->text() == nomClasse->text())
+    {
+        nomClasse->setStyleSheet("background: rgb(255,255,255)");
+        nomClasseMere->setStyleSheet("background: rgb(252,254,171)");
+        nomClasseMere->setFocus(Qt::OtherFocusReason);
+        QMessageBox::warning(this, tr("Attention"), tr("Le nom de la Classe mère est invalide :\nLe nom de la Classe mère doit être différent du nom de la Classe"));
+    }
     else
     {
         nomClasse->setStyleSheet("background: rgb(255,255,255)");
@@ -253,18 +260,77 @@ void FenPrincipale::validerFenPrincipale()
         }
 
         // Checkbox checked : Add includes
+        bool includesExistants(false);
+
         if(ajoutIncludes->isChecked() && nbrIncludesActifs != 0)
         {
+            includesExistants = true;
+
             for(int i = 0; i < nbrIncludesActifs; i++)
             {
                 chaine->append("#include ");
                 chaine->append(listeIncludesActifs[i]);
                 chaine->append("\n");
             }
-
-            chaine->append("\n\n");
         }
 
+        // Add forced includes
+        bool includeVector(false);
+        bool attributVector(false);
+
+        for(int i = 0; i < nbrIncludesActifs; ++i)
+        {
+            if(ajoutIncludes->isChecked() && listeIncludesActifs[i] == "<vector>")
+            {
+                includeVector = true;
+            }
+        }
+
+        for(int i = 0; i < nbrAttributs; ++i)
+        {
+            if(ajoutAttributs->isChecked() && listeAttributs[i].vector == true)
+            {
+                attributVector = true;
+            }
+        }
+
+        if(attributVector == true && includeVector == false)
+        {
+            chaine->append(QString("#include <vector>\n"));
+            includesExistants = true;
+        }
+
+        bool includeString(false);
+        bool attributString(false);
+
+        for(int i = 0; i < nbrIncludesActifs; ++i)
+        {
+            if(ajoutIncludes->isChecked() && listeIncludesActifs[i] == "<string>")
+            {
+                includeString = true;
+            }
+        }
+
+        for(int i = 0; i < nbrAttributs; ++i)
+        {
+            if(ajoutAttributs->isChecked() && listeAttributs[i].type == "string")
+            {
+                attributString = true;
+            }
+        }
+
+        if(attributString == true && includeString == false)
+        {
+            chaine->append(QString("#include <string>\n"));
+            includesExistants = true;
+        }
+
+        if(includesExistants)
+        {
+            chaine->append(QString("\n\n"));
+        }
+
+        // Class set
         chaine->append(QString("class "));
         chaine->append(QString(nomClasse->text()));
 
@@ -397,7 +463,7 @@ void FenPrincipale::gestionAttributs()
 // Information window
 void FenPrincipale::fenetreInfo()
 {
-   QMessageBox::information(this, tr("Information"), tr("<strong>CodeGenerator v. 4.0</strong><br /><br />Programmeur : Seb2lyon<br />Développé entre le 30-01-2018 et le 16-02-2018<br />GNU General Public License v3.0<br /><br /><a href=http://seb2lyon.site11.com>Visitez mon site web !!!</a>"));
+   QMessageBox::information(this, tr("Information"), tr("<strong>CodeGenerator v. 4.0</strong><br /><br />Programmeur : Seb2lyon<br />Développé entre le 30-01-2018 et le 18-02-2018<br />GNU General Public License v3.0<br /><br /><a href=http://seb2lyon.site11.com>Visitez mon site web !!!</a>"));
 }
 
 // Add attributes in the code

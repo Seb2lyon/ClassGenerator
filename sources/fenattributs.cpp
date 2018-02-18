@@ -9,7 +9,7 @@ FenAttributs::FenAttributs(FenPrincipale *fenetre, int nbrAttributs, vector<Attr
     copieNbrAttributs = nbrAttributs;
     copieListeAttributs = tableauAttributs;
 
-    setFixedSize(440, 450);
+    setFixedSize(450, 450);
 
     QValidator *validator = new QRegularExpressionValidator(QRegularExpression("[_A-Za-z0-9]{0,32}"));
 

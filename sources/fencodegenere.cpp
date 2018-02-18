@@ -4,7 +4,7 @@ using namespace std;
 
 FenCodeGenere::FenCodeGenere(FenPrincipale *fenetre, QString *chaineCode) : QDialog(fenetre)
 {    
-    setFixedSize(400, 550);
+    setFixedSize(450, 550);
 
     QTextEdit *codeGenere = new QTextEdit;
     codeGenere->setPlainText(*chaineCode);
