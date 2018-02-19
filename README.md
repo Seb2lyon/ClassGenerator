@@ -6,9 +6,8 @@ This is a graphical tool that will help you to generate automatically a C++ clas
 
 The idea of this program come from the wonderfull website "Openclassrooms" which is made for beginners to learn programing langages. I've learned C++ from there : https://openclassrooms.com/courses/programmez-avec-le-langage-c
 
-I still have improvements to do, like :
-- generate .h AND .cpp code (2 tabs)
-- save .h and .cpp files containing this sources
+I still have one improvement to do :
+- save .h and .cpp files containing the sources
 
 
 Don't hesitate to sent me coments, ideas or to improve this code by sending me some PR.

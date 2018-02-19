@@ -647,6 +647,11 @@ QString *FenPrincipale::ajoutAttributsDansCode(bool etat)
 }
 
 // Getter
+QLineEdit *FenPrincipale::getNomClasse()
+{
+    return nomClasse;
+}
+
 QCheckBox *FenPrincipale::getAjoutIncludes()
 {
     return ajoutIncludes;
