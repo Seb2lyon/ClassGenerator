@@ -94,7 +94,7 @@ FenPrincipale::FenPrincipale():QWidget()
 
 
     // 4) Create buttons
-    QPushButton *generer = new QPushButton(tr("Générez !"));
+    QPushButton *generer = new QPushButton(tr("Générer"));
     generer->setFixedSize(80, 25);
     QPushButton *quitter = new QPushButton(tr("Quitter"));
     quitter->setFixedSize(80, 25);
