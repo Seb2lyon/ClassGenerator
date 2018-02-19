@@ -379,10 +379,10 @@ void FenPrincipale::validerFenPrincipale()
                     if(listeAttributs[i].vector == true)
                     {
                         chaineH->append(QString("vector<"));
-                    }
-                    if(listeAttributs[i].type == "string")
-                    {
-                        chaineH->append(QString("std::"));
+                        if(listeAttributs[i].type == "string")
+                        {
+                            chaineH->append(QString("std::"));
+                        }
                     }
                     chaineH->append(listeAttributs[i].type);
                     if(listeAttributs[i].vector == true)
