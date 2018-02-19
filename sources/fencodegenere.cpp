@@ -2,12 +2,12 @@
 
 using namespace std;
 
-FenCodeGenere::FenCodeGenere(FenPrincipale *fenetre, QString *chaineCode) : QDialog(fenetre, Qt::WindowTitleHint | Qt::WindowSystemMenuHint)
+FenCodeGenere::FenCodeGenere(FenPrincipale *fenetre, QString *chaineCodeH, QString *chaineCodeCPP) : QDialog(fenetre, Qt::WindowTitleHint | Qt::WindowSystemMenuHint)
 {    
     setFixedSize(450, 550);
 
     QTextEdit *codeGenere = new QTextEdit;
-    codeGenere->setPlainText(*chaineCode);
+    codeGenere->setPlainText(*chaineCodeH);
     codeGenere->setReadOnly(true);
     codeGenere->setFont(QFont("Courier", 9));
     codeGenere->setLineWrapMode(QTextEdit::NoWrap);

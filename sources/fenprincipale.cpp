@@ -199,42 +199,45 @@ void FenPrincipale::validerFenPrincipale()
         nomClasse->setStyleSheet("background: rgb(255,255,255)");
         nomClasseMere->setStyleSheet("background: rgb(255,255,255)");
 
-        QString *chaine = new QString;
+
+        // Generated code for H
+
+        QString *chaineH = new QString;
 
         // Coments activated
         if(ajoutCommentaires->isChecked())
         {
-            chaine->append(QString("/*\n"));
+            chaineH->append(QString("/*\n"));
 
             // If the author's name is set
             if(!auteur->text().isEmpty())
             {
-                chaine->append(QString(tr("Auteur : ")));
-                chaine->append(QString(auteur->text()));
-                chaine->append(QString("\n"));
+                chaineH->append(QString(tr("Auteur : ")));
+                chaineH->append(QString(auteur->text()));
+                chaineH->append(QString("\n"));
             }
 
-            chaine->append(QString(tr("Date de création : ")));
-            chaine->append(QString(dateCreation->date().toString(Qt::SystemLocaleLongDate)));
-            chaine->append(QString("\n"));
+            chaineH->append(QString(tr("Date de création : ")));
+            chaineH->append(QString(dateCreation->date().toString(Qt::SystemLocaleLongDate)));
+            chaineH->append(QString("\n"));
 
             // If licence is set
             if(license->currentIndex() != 0 && license->currentText() != QString(tr("Autre... (modifiez cette ligne)")) && !license->currentText().isEmpty())
             {
-                chaine->append(tr("\nCe logiciel est sous licence : "));
-                chaine->append(license->currentText());
-                chaine->append("\n");
+                chaineH->append(tr("\nCe logiciel est sous licence : "));
+                chaineH->append(license->currentText());
+                chaineH->append("\n");
             }
 
             // If the role's text is written
             if(!roleClasse->toPlainText().isEmpty())
             {
-                chaine->append(QString(tr("\nRôle :\n")));
-                chaine->append(QString(roleClasse->toPlainText()));
-                chaine->append(QString("\n"));
+                chaineH->append(QString(tr("\nRôle :\n")));
+                chaineH->append(QString(roleClasse->toPlainText()));
+                chaineH->append(QString("\n"));
             }
 
-            chaine->append(QString("*/\n\n\n"));
+            chaineH->append(QString("*/\n\n\n"));
         }
 
         // Checkbox checked : Header protected
@@ -243,20 +246,20 @@ void FenPrincipale::validerFenPrincipale()
             // If the user delete the generated Header Guard
             if(headerGuard->text().isEmpty())
             {
-                chaine->append(QString("#ifndef HEADER_"));
-                chaine->append(QString(nomClasse->text().toUpper()));
-                chaine->append(QString("\n#define HEADER_"));
-                chaine->append(QString(nomClasse->text().toUpper()));
+                chaineH->append(QString("#ifndef HEADER_"));
+                chaineH->append(QString(nomClasse->text().toUpper()));
+                chaineH->append(QString("\n#define HEADER_"));
+                chaineH->append(QString(nomClasse->text().toUpper()));
             }
             else
             {
-                chaine->append(QString("#ifndef "));
-                chaine->append(QString(headerGuard->text().toUpper()));
-                chaine->append(QString("\n#define "));
-                chaine->append(QString(headerGuard->text().toUpper()));
+                chaineH->append(QString("#ifndef "));
+                chaineH->append(QString(headerGuard->text().toUpper()));
+                chaineH->append(QString("\n#define "));
+                chaineH->append(QString(headerGuard->text().toUpper()));
             }
 
-            chaine->append(QString("\n\n\n"));
+            chaineH->append(QString("\n\n\n"));
         }
 
         // Checkbox checked : Add includes
@@ -268,9 +271,9 @@ void FenPrincipale::validerFenPrincipale()
 
             for(int i = 0; i < nbrIncludesActifs; i++)
             {
-                chaine->append("#include ");
-                chaine->append(listeIncludesActifs[i]);
-                chaine->append("\n");
+                chaineH->append("#include ");
+                chaineH->append(listeIncludesActifs[i]);
+                chaineH->append("\n");
             }
         }
 
@@ -296,7 +299,7 @@ void FenPrincipale::validerFenPrincipale()
 
         if(attributVector == true && includeVector == false)
         {
-            chaine->append(QString("#include <vector>\n"));
+            chaineH->append(QString("#include <vector>\n"));
             includesExistants = true;
         }
 
@@ -321,42 +324,42 @@ void FenPrincipale::validerFenPrincipale()
 
         if(attributString == true && includeString == false)
         {
-            chaine->append(QString("#include <string>\n"));
+            chaineH->append(QString("#include <string>\n"));
             includesExistants = true;
         }
 
         if(includesExistants)
         {
-            chaine->append(QString("\n\n"));
+            chaineH->append(QString("\n\n"));
         }
 
         // Class set
-        chaine->append(QString("class "));
-        chaine->append(QString(nomClasse->text()));
+        chaineH->append(QString("class "));
+        chaineH->append(QString(nomClasse->text()));
 
         // Mother-class set
         if(!nomClasseMere->text().isEmpty())
         {
-            chaine->append(QString(" : public "));
-            chaine->append(QString(nomClasseMere->text()));
+            chaineH->append(QString(" : public "));
+            chaineH->append(QString(nomClasseMere->text()));
         }
 
-        chaine->append(QString("\n{\n    public:\n"));
+        chaineH->append(QString("\n{\n    public:\n"));
 
         // Checkbox checked : Constructor generated
         if(genereConstructeur->isChecked())
         {
-            chaine->append(QString("        "));
-            chaine->append(QString(nomClasse->text()));
-            chaine->append(QString("();\n"));
+            chaineH->append(QString("        "));
+            chaineH->append(QString(nomClasse->text()));
+            chaineH->append(QString("();\n"));
         }
 
         // Checkbox checked : Destructor generated
         if(genereDestructeur->isChecked())
         {
-            chaine->append(QString("        ~"));
-            chaine->append(QString(nomClasse->text()));
-            chaine->append(QString("();\n"));
+            chaineH->append(QString("        ~"));
+            chaineH->append(QString(nomClasse->text()));
+            chaineH->append(QString("();\n"));
         }
 
         // Checkbox checked : Accessors generated
@@ -368,58 +371,158 @@ void FenPrincipale::validerFenPrincipale()
             {
                 for(int i = 0; i < nbrAttributs; ++i)
                 {
-                    chaine->append(QString("        "));
+                    chaineH->append(QString("        "));
                     if(listeAttributs[i].type == "string" || listeAttributs[i].vector == true)
                     {
-                        chaine->append(QString("std::"));
+                        chaineH->append(QString("std::"));
                     }
                     if(listeAttributs[i].vector == true)
                     {
-                        chaine->append(QString("vector<"));
+                        chaineH->append(QString("vector<"));
                     }
-                    chaine->append(listeAttributs[i].type);
+                    if(listeAttributs[i].type == "string")
+                    {
+                        chaineH->append(QString("std::"));
+                    }
+                    chaineH->append(listeAttributs[i].type);
                     if(listeAttributs[i].vector == true)
                     {
-                        chaine->append(QString(">"));
+                        chaineH->append(QString(">"));
                     }
-                    chaine->append(QString(" "));
+                    chaineH->append(QString(" "));
                     if(listeAttributs[i].pointeur == true)
                     {
-                        chaine->append(QString("*"));
+                        chaineH->append(QString("*"));
                     }
                     nouveauNom = listeAttributs[i].nom;
                     nouveauNom[0] = nouveauNom[0].toUpper();
-                    chaine->append(QString("get"));
-                    chaine->append(nouveauNom);
-                    chaine->append(QString("();\n"));
+                    chaineH->append(QString("get"));
+                    chaineH->append(nouveauNom);
+                    chaineH->append(QString("();\n"));
                 }
             }
         }
 
         // Checkbox checked : Add attributes
-        chaine->append(QString("\n\n    protected:\n"));
+        chaineH->append(QString("\n\n    protected:\n"));
 
         if(ajoutAttributs->isChecked())
         {
-            chaine->append(ajoutAttributsDansCode(false));
+            chaineH->append(ajoutAttributsDansCode(false));
         }
 
-        chaine->append(QString("\n\n    private:\n"));
+        chaineH->append(QString("\n\n    private:\n"));
 
         if(ajoutAttributs->isChecked())
         {
-            chaine->append(ajoutAttributsDansCode(true));
+            chaineH->append(ajoutAttributsDansCode(true));
         }
 
-        chaine->append(QString("\n\n};\n\n"));
+        chaineH->append(QString("\n\n};\n\n"));
 
-        // End of generated code
+        // End of generated code for H
         if(protegeHeader->isChecked())
         {
-            chaine->append(QString("#endif\n\n"));
+            chaineH->append(QString("#endif\n\n"));
         }
 
-        FenCodeGenere fenetreCode(this, chaine);
+
+        // Generated code for CPP
+
+        QString *chaineCPP = new QString;
+
+        // Include class header
+        chaineCPP->append(QString("#include \""));
+        chaineCPP->append(nomClasse->text());
+        chaineCPP->append(QString(".h\"\n\n\n"));
+
+        // Class generator
+        if(genereConstructeur->isChecked())
+        {
+            chaineCPP->append(QString(tr("// Constructeur\n")));
+            chaineCPP->append(nomClasse->text());
+            chaineCPP->append(QString("::"));
+            chaineCPP->append(nomClasse->text());
+            chaineCPP->append(QString("()"));
+
+            if(!nomClasseMere->text().isEmpty())
+            {
+                chaineCPP->append(QString(" : "));
+                chaineCPP->append(nomClasseMere->text());
+                chaineCPP->append(QString("()"));
+            }
+
+            chaineCPP->append(QString("\n{\n\n}\n\n"));
+        }
+
+        // Class destructor
+        if(genereDestructeur->isChecked())
+        {
+            bool pointeur(false);
+
+            chaineCPP->append(QString(tr("// Destructeur\n")));
+            chaineCPP->append(nomClasse->text());
+            chaineCPP->append(QString("::~"));
+            chaineCPP->append(nomClasse->text());
+            chaineCPP->append(QString("()\n{\n"));
+            for(int i = 0; i < nbrAttributs; ++i)
+            {
+                if(listeAttributs[i].pointeur == true)
+                {
+                    pointeur = true;
+                    chaineCPP->append(QString("    delete "));
+                    chaineCPP->append(listeAttributs[i].nom);
+                    chaineCPP->append(QString(";\n"));
+                }
+            }
+
+            if(pointeur == false)
+            {
+                chaineCPP->append(QString("\n"));
+            }
+
+            chaineCPP->append(QString("}\n\n"));
+        }
+
+        // Set accessors
+        if(genereAccesseurs->isChecked())
+        {
+            chaineCPP->append(QString(tr("// Accesseurs\n")));
+
+            for(int i = 0; i < nbrAttributs; ++i)
+            {
+                chaineCPP->append(nomClasse->text());
+                chaineCPP->append(QString("::"));
+                if(listeAttributs[i].vector == true)
+                {
+                    chaineCPP->append(QString("vector<"));
+                }
+                chaineCPP->append(listeAttributs[i].type);
+                if(listeAttributs[i].vector == true)
+                {
+                    chaineCPP->append(QString(">"));
+                }
+                chaineCPP->append(QString(" "));
+                if(listeAttributs[i].pointeur == true)
+                {
+                    chaineCPP->append(QString("*"));
+                }
+
+                QString nomModifie;
+                nomModifie = listeAttributs[i].nom;
+                nomModifie[0] = nomModifie[0].toUpper();
+
+                chaineCPP->append(QString("get"));
+                chaineCPP->append(nomModifie);
+                chaineCPP->append("()\n{\n    return ");
+                chaineCPP->append(listeAttributs[i].nom);
+                chaineCPP->append(QString(";\n}\n\n"));
+            }
+        }
+
+        // End of generated code for CPP
+
+        FenCodeGenere fenetreCode(this, chaineH, chaineCPP);
 
         fenetreCode.exec();
     }
@@ -500,7 +603,7 @@ void FenPrincipale::gestionAttributs()
 // Information window
 void FenPrincipale::fenetreInfo()
 {
-   QMessageBox::information(this, tr("Information"), tr("<strong>CodeGenerator v. 4.0</strong><br /><br />Programmeur : Seb2lyon<br />Développé entre le 30-01-2018 et le 19-02-2018<br />GNU General Public License v3.0<br /><br /><a href=http://seb2lyon.site11.com>Visitez mon site web !!!</a>"));
+   QMessageBox::information(this, tr("Information"), tr("<strong>CodeGenerator v. 4.0</strong><br /><br />Programmeur : Seb2lyon<br />Développé entre le 30-01-2018 et le 20-02-2018<br />GNU General Public License v3.0<br /><br /><a href=http://seb2lyon.site11.com>Visitez mon site web !!!</a>"));
 }
 
 // Add attributes in the code

@@ -9,7 +9,7 @@ class FenCodeGenere : public QDialog
     Q_OBJECT
 
     public:
-        FenCodeGenere(FenPrincipale *fenetre, QString *chaineCode);
+        FenCodeGenere(FenPrincipale *fenetre, QString *chaineCodeH, QString *chaineCodeCPP);
 
     private:
 };
