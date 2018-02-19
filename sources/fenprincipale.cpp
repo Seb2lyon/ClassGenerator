@@ -359,6 +359,43 @@ void FenPrincipale::validerFenPrincipale()
             chaine->append(QString("();\n"));
         }
 
+        // Checkbox checked : Accessors generated
+        if(genereAccesseurs->isChecked())
+        {
+            QString nouveauNom;
+
+            if(nbrAttributs > 0)
+            {
+                for(int i = 0; i < nbrAttributs; ++i)
+                {
+                    chaine->append(QString("        "));
+                    if(listeAttributs[i].type == "string" || listeAttributs[i].vector == true)
+                    {
+                        chaine->append(QString("std::"));
+                    }
+                    if(listeAttributs[i].vector == true)
+                    {
+                        chaine->append(QString("vector<"));
+                    }
+                    chaine->append(listeAttributs[i].type);
+                    if(listeAttributs[i].vector == true)
+                    {
+                        chaine->append(QString(">"));
+                    }
+                    chaine->append(QString(" "));
+                    if(listeAttributs[i].pointeur == true)
+                    {
+                        chaine->append(QString("*"));
+                    }
+                    nouveauNom = listeAttributs[i].nom;
+                    nouveauNom[0] = nouveauNom[0].toUpper();
+                    chaine->append(QString("get"));
+                    chaine->append(nouveauNom);
+                    chaine->append(QString("();\n"));
+                }
+            }
+        }
+
         // Checkbox checked : Add attributes
         chaine->append(QString("\n\n    protected:\n"));
 
@@ -463,7 +500,7 @@ void FenPrincipale::gestionAttributs()
 // Information window
 void FenPrincipale::fenetreInfo()
 {
-   QMessageBox::information(this, tr("Information"), tr("<strong>CodeGenerator v. 4.0</strong><br /><br />Programmeur : Seb2lyon<br />Développé entre le 30-01-2018 et le 18-02-2018<br />GNU General Public License v3.0<br /><br /><a href=http://seb2lyon.site11.com>Visitez mon site web !!!</a>"));
+   QMessageBox::information(this, tr("Information"), tr("<strong>CodeGenerator v. 4.0</strong><br /><br />Programmeur : Seb2lyon<br />Développé entre le 30-01-2018 et le 19-02-2018<br />GNU General Public License v3.0<br /><br /><a href=http://seb2lyon.site11.com>Visitez mon site web !!!</a>"));
 }
 
 // Add attributes in the code
