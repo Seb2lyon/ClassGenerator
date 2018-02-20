@@ -12,7 +12,7 @@
 int main(int argc, char *argv[])
 {
     QApplication appli(argc, argv);
-    appli.setWindowIcon(QIcon(QPixmap("images/icone.png")));
+    appli.setWindowIcon(QIcon(QPixmap("images/ClassGenerator.ico")));
     appli.setApplicationName("ClassGenerator v. 4.3");
 
     QString local = QLocale::system().name().section('_', 0, 0);
