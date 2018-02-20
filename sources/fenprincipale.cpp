@@ -42,9 +42,9 @@ FenPrincipale::FenPrincipale():QWidget()
     genereDestructeur = new QCheckBox;
     genereDestructeur->setText(tr("Générer un &destructeur"));
     ajoutIncludes = new QCheckBox;
-    ajoutIncludes->setText(tr("Aj&outer des includes"));
+    ajoutIncludes->setText(tr("Ajouter des &includes"));
     ajoutAttributs = new QCheckBox;
-    ajoutAttributs->setText(tr("Ajo&uter des attributs"));
+    ajoutAttributs->setText(tr("Ajouter des &attributs"));
     genereAccesseurs = new QCheckBox;
     genereAccesseurs->setText(tr("&Générer accesseurs"));
     if(!ajoutAttributs->isChecked())
@@ -81,7 +81,7 @@ FenPrincipale::FenPrincipale():QWidget()
 
     // Form Layout
     QFormLayout *ajoutCommentairesLayout = new QFormLayout;
-    ajoutCommentairesLayout->addRow(tr("&Auteur : "), auteur);
+    ajoutCommentairesLayout->addRow(tr("A&uteur : "), auteur);
     ajoutCommentairesLayout->addRow(tr("Da&te de création : "), dateCreation);
     ajoutCommentairesLayout->addRow(tr("&Licence : "), license);
     ajoutCommentairesLayout->addRow(tr("&Rôle de la classe : "), roleClasse);
@@ -603,7 +603,7 @@ void FenPrincipale::gestionAttributs()
 // Information window
 void FenPrincipale::fenetreInfo()
 {
-   QMessageBox::information(this, tr("Information"), tr("<strong>CodeGenerator v. 4.0</strong><br /><br />Programmeur : Seb2lyon<br />Développé entre le 30-01-2018 et le 20-02-2018<br />GNU General Public License v3.0<br /><br /><a href=http://seb2lyon.site11.com>Visitez mon site web !!!</a>"));
+   QMessageBox::information(this, tr("Information"), tr("<strong>CodeGenerator v. 4.3</strong><br /><br />Programmeur : Seb2lyon<br />Développé entre le 30-01-2018 et le 05-03-2018<br />GNU General Public License v3.0<br /><br /><a href=http://seb2lyon.site11.com>Visitez mon site web !!!</a>"));
 }
 
 // Add attributes in the code

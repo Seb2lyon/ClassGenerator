@@ -198,12 +198,12 @@ Veuillez en saisir un nouveau</source>
     </message>
     <message>
         <location filename="fenprincipale.cpp" line="45"/>
-        <source>Aj&amp;outer des includes</source>
+        <source>Ajouter des &amp;includes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="fenprincipale.cpp" line="47"/>
-        <source>Ajo&amp;uter des attributs</source>
+        <source>Ajouter des &amp;attributs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -229,7 +229,7 @@ Veuillez en saisir un nouveau</source>
     </message>
     <message>
         <location filename="fenprincipale.cpp" line="84"/>
-        <source>&amp;Auteur : </source>
+        <source>A&amp;uteur : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -341,7 +341,7 @@ Rôle :
     </message>
     <message>
         <location filename="fenprincipale.cpp" line="606"/>
-        <source>&lt;strong&gt;CodeGenerator v. 4.0&lt;/strong&gt;&lt;br /&gt;&lt;br /&gt;Programmeur : Seb2lyon&lt;br /&gt;Développé entre le 30-01-2018 et le 20-02-2018&lt;br /&gt;GNU General Public License v3.0&lt;br /&gt;&lt;br /&gt;&lt;a href=http://seb2lyon.site11.com&gt;Visitez mon site web !!!&lt;/a&gt;</source>
+        <source>&lt;strong&gt;CodeGenerator v. 4.3&lt;/strong&gt;&lt;br /&gt;&lt;br /&gt;Programmeur : Seb2lyon&lt;br /&gt;Développé entre le 30-01-2018 et le 05-03-2018&lt;br /&gt;GNU General Public License v3.0&lt;br /&gt;&lt;br /&gt;&lt;a href=http://seb2lyon.site11.com&gt;Visitez mon site web !!!&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

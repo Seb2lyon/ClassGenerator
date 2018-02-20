@@ -1,8 +1,8 @@
 /***********************************
- *      ClassGenerator v. 4.0      *
+ *      ClassGenerator v. 4.3      *
  *             -------             *
  *        Coder : Seb2lyon         *
- *  from 01-30-2018 to 20-02-2018  *
+ *  from 01-30-2018 to 05-03-2018  *
  *                                 *
  *             Enjoy ;)            *
  ***********************************/
@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 {
     QApplication appli(argc, argv);
     appli.setWindowIcon(QIcon(QPixmap("images/icone.png")));
-    appli.setApplicationName("ClassGenerator v. 4.0");
+    appli.setApplicationName("ClassGenerator v. 4.3");
 
     QString local = QLocale::system().name().section('_', 0, 0);
 
