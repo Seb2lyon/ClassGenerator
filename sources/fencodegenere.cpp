@@ -6,6 +6,11 @@ FenCodeGenere::FenCodeGenere(FenPrincipale *fenetre, QString *chaineCodeH, QStri
 {    
     setFixedSize(450, 550);
 
+    // Copies of the 2 generated codes
+    copieFenPrincipale = fenetre;
+    enregistreCodeH = chaineCodeH;
+    enregistreCodeCPP = chaineCodeCPP;
+
     QTabWidget *pageOnglets = new QTabWidget;
 
     QTextEdit *codeGenereH = new QTextEdit;
@@ -20,11 +25,11 @@ FenCodeGenere::FenCodeGenere(FenPrincipale *fenetre, QString *chaineCodeH, QStri
     codeGenereCPP->setFont(QFont("Courier", 9));
     codeGenereCPP->setLineWrapMode(QTextEdit::NoWrap);
 
-    QString nomPage1 = fenetre->getNomClasse()->text() + ".h";
-    QString nomPage2 = fenetre->getNomClasse()->text() + ".cpp";
+    nomPageH = fenetre->getNomClasse()->text() + ".h";
+    nomPageCPP = fenetre->getNomClasse()->text() + ".cpp";
 
-    pageOnglets->addTab(codeGenereH, nomPage1);
-    pageOnglets->addTab(codeGenereCPP, nomPage2);
+    pageOnglets->addTab(codeGenereH, nomPageH);
+    pageOnglets->addTab(codeGenereCPP, nomPageCPP);
 
     QPushButton *fermer = new QPushButton(tr("Fermer"));
     fermer->setFixedSize(80, 25);
@@ -43,5 +48,37 @@ FenCodeGenere::FenCodeGenere(FenPrincipale *fenetre, QString *chaineCodeH, QStri
     setLayout(layout);
 
     QObject::connect(fermer, SIGNAL(clicked()), this, SLOT(accept()));
-    // Add slot for recording the files
+    QObject::connect(enregistrer, SIGNAL(clicked()), this, SLOT(enregistrerCodes()));
+}
+
+void FenCodeGenere::enregistrerCodes()
+{
+    QString cheminFichierH;
+    QString cheminFichierCPP;
+
+    if(copieFenPrincipale->getCheminFichier().isEmpty())
+    {
+        cheminFichierH = nomPageH;
+    }
+    else
+    {
+        cheminFichierH = copieFenPrincipale->getCheminFichier() + "/" + nomPageH;
+    }
+
+    cheminFichierH = QFileDialog::getSaveFileName(this, tr("Enregistrer le fichier header"), cheminFichierH, tr("Header (*.h)"));
+    QString cheminFichier;
+    cheminFichier = cheminFichierH.section("/", 0, -2);
+    copieFenPrincipale->setCheminFichier(cheminFichier);
+    cheminFichierCPP = QFileDialog::getSaveFileName(this, tr("Enregistrer le fichier source"), cheminFichier + "/" + nomPageCPP, tr("Code source (*.cpp)"));
+
+    QFile fichierH(cheminFichierH);
+    QFile fichierCPP(cheminFichierCPP);
+
+    fichierH.open(QIODevice::WriteOnly | QIODevice::Truncate);
+    QTextStream streamFichierH(&fichierH);
+    streamFichierH << *enregistreCodeH;
+
+    fichierCPP.open(QIODevice::WriteOnly | QIODevice::Truncate);
+    QTextStream streamFichierCPP(&fichierCPP);
+    streamFichierCPP << *enregistreCodeCPP;
 }

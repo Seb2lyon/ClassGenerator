@@ -2,12 +2,11 @@
 
 ClassGenerator is a GUI program (in french) written in C++ with Qt library.
 
-This is a graphical tool that will help you to generate automatically a C++ class source code.
+This is a graphical tool that will help you to generate automatically a simple C++ class source code.
 
 The idea of this program come from the wonderfull website "Openclassrooms" which is made for beginners to learn programing langages. I've learned C++ from there : https://openclassrooms.com/courses/programmez-avec-le-langage-c
 
-I still have two little improvements to do :
-- save .h and .cpp files containing the sources
+I still have one little improvement to do :
 - translation in English and Polish
 
 

@@ -22,15 +22,17 @@ class FenPrincipale : public QWidget
 
     public :
         FenPrincipale();
-        QLineEdit *getNomClasse();
         QString *ajoutAttributsDansCode(bool etat);
+        QLineEdit *getNomClasse();
         QCheckBox *getAjoutIncludes();
         QCheckBox *getAjoutAttributs();
         QCheckBox *getGenereAccesseurs();
         std::vector<Attribut> getListeAttributs();
+        QString getCheminFichier();
         void setIncludesDispo(std::vector<QString> nouvelleListeIncludesDispo, int copieNbrIncludesDispo);
         void setIncludesActifs(std::vector<QString> nouvelleListeIncludesActifs, int copieNbrIncludesActifs);
         void setAttributs(std::vector<Attribut> nouvelleListeAttributs, int copieNbrAttributs);
+        void setCheminFichier(QString nouveauCheminFichier);
 
     public slots :
         void validerFenPrincipale();
@@ -61,6 +63,7 @@ class FenPrincipale : public QWidget
         QDateEdit *dateCreation; // Creation date
         QComboBox *license; // Choose license
         QTextEdit *roleClasse; // Class description
+        QString cheminFichier; // Files path
 };
 
 #endif // FENPRINCIPALE_H

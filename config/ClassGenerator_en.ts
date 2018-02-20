@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en_US">
+<TS version="2.0" language="en_US">
 <context>
     <name>FenAttributs</name>
     <message>
@@ -101,8 +101,33 @@ Veuillez en saisir un nouveau</source>
 <context>
     <name>FenCodeGenere</name>
     <message>
-        <location filename="fencodegenere.cpp" line="15"/>
+        <location filename="fencodegenere.cpp" line="34"/>
         <source>Fermer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="fencodegenere.cpp" line="36"/>
+        <source>Enregistrer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="fencodegenere.cpp" line="68"/>
+        <source>Enregistrer le fichier header</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="fencodegenere.cpp" line="68"/>
+        <source>Header (*.h)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="fencodegenere.cpp" line="72"/>
+        <source>Enregistrer le fichier source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="fencodegenere.cpp" line="72"/>
+        <source>Code source (*.cpp)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -198,7 +223,7 @@ Veuillez en saisir un nouveau</source>
     </message>
     <message>
         <location filename="fenprincipale.cpp" line="78"/>
-        <location filename="fenprincipale.cpp" line="222"/>
+        <location filename="fenprincipale.cpp" line="225"/>
         <source>Autre... (modifiez cette ligne)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -229,7 +254,7 @@ Veuillez en saisir un nouveau</source>
     </message>
     <message>
         <location filename="fenprincipale.cpp" line="97"/>
-        <source>Générez !</source>
+        <source>Générer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -269,36 +294,54 @@ Le nom de la Classe mère doit être différent du nom de la Classe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="fenprincipale.cpp" line="212"/>
+        <location filename="fenprincipale.cpp" line="215"/>
         <source>Auteur : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="fenprincipale.cpp" line="217"/>
+        <location filename="fenprincipale.cpp" line="220"/>
         <source>Date de création : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="fenprincipale.cpp" line="224"/>
+        <location filename="fenprincipale.cpp" line="227"/>
         <source>
 Ce logiciel est sous licence : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="fenprincipale.cpp" line="232"/>
+        <location filename="fenprincipale.cpp" line="235"/>
         <source>
 Rôle :
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="fenprincipale.cpp" line="466"/>
+        <location filename="fenprincipale.cpp" line="442"/>
+        <source>// Constructeur
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="fenprincipale.cpp" line="463"/>
+        <source>// Destructeur
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="fenprincipale.cpp" line="490"/>
+        <source>// Accesseurs
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="fenprincipale.cpp" line="606"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="fenprincipale.cpp" line="466"/>
-        <source>&lt;strong&gt;CodeGenerator v. 4.0&lt;/strong&gt;&lt;br /&gt;&lt;br /&gt;Programmeur : Seb2lyon&lt;br /&gt;Développé entre le 30-01-2018 et le 18-02-2018&lt;br /&gt;GNU General Public License v3.0&lt;br /&gt;&lt;br /&gt;&lt;a href=http://seb2lyon.site11.com&gt;Visitez mon site web !!!&lt;/a&gt;</source>
+        <location filename="fenprincipale.cpp" line="606"/>
+        <source>&lt;strong&gt;CodeGenerator v. 4.0&lt;/strong&gt;&lt;br /&gt;&lt;br /&gt;Programmeur : Seb2lyon&lt;br /&gt;Développé entre le 30-01-2018 et le 20-02-2018&lt;br /&gt;GNU General Public License v3.0&lt;br /&gt;&lt;br /&gt;&lt;a href=http://seb2lyon.site11.com&gt;Visitez mon site web !!!&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

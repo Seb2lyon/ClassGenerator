@@ -11,7 +11,15 @@ class FenCodeGenere : public QDialog
     public:
         FenCodeGenere(FenPrincipale *fenetre, QString *chaineCodeH, QString *chaineCodeCPP);
 
+    public slots:
+        void enregistrerCodes();
+
     private:
+        FenPrincipale *copieFenPrincipale;
+        QString nomPageH;
+        QString nomPageCPP;
+        QString *enregistreCodeH;
+        QString *enregistreCodeCPP;
 };
 
 #endif // FENCODEGENERE_H

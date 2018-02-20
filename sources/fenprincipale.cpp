@@ -652,6 +652,11 @@ QLineEdit *FenPrincipale::getNomClasse()
     return nomClasse;
 }
 
+QString FenPrincipale::getCheminFichier()
+{
+    return cheminFichier;
+}
+
 QCheckBox *FenPrincipale::getAjoutIncludes()
 {
     return ajoutIncludes;
@@ -695,4 +700,9 @@ void FenPrincipale::setAttributs(vector<Attribut> nouvelleListeAttributs, int co
 
     listeAttributs.clear();
     listeAttributs = nouvelleListeAttributs;
+}
+
+void FenPrincipale::setCheminFichier(QString nouveauCheminFichier)
+{
+    cheminFichier = nouveauCheminFichier;
 }
