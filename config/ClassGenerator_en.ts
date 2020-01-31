@@ -348,7 +348,7 @@ Rôle :
     <message>
         <location filename="fenprincipale.cpp" line="606"/>
         <source>&lt;strong&gt;CodeGenerator v. 4.4&lt;/strong&gt;&lt;br /&gt;&lt;br /&gt;Programmeur : Seb2lyon&lt;br /&gt;Développé entre le 30-01-2018 et le 31-01-2020&lt;br /&gt;GNU General Public License v3.0&lt;br /&gt;&lt;br /&gt;&lt;a href=http://seb2lyon.info.free.fr&gt;Visitez mon site web !!!&lt;/a&gt;</source>
-        <translation>&lt;strong&gt;CodeGenerator v. 4.4&lt;/strong&gt;&lt;br /&gt;&lt;br /&gt;Programmer : Seb2lyon&lt;br /&gt;Developped between 01-30-2018 and 01-31-2020&lt;br /&gt;GNU General Public License v3.0&lt;br /&gt;&lt;br /&gt;&lt;a href=http://seb2lyon.info.free.fr&gt;Visitez mon site web !!!&lt;/a&gt;</translation>
+        <translation>&lt;strong&gt;CodeGenerator v. 4.4&lt;/strong&gt;&lt;br /&gt;&lt;br /&gt;Programmer : Seb2lyon&lt;br /&gt;Developped between 01-30-2018 and 01-31-2020&lt;br /&gt;GNU General Public License v3.0&lt;br /&gt;&lt;br /&gt;&lt;a href=http://seb2lyon.info.free.fr&gt;Visit my web site !!!&lt;/a&gt;</translation>
     </message>
     <message>
         <source>&lt;strong&gt;CodeGenerator v. 4.3&lt;/strong&gt;&lt;br /&gt;&lt;br /&gt;Programmeur : Seb2lyon&lt;br /&gt;Développé entre le 30-01-2018 et le 05-03-2018&lt;br /&gt;GNU General Public License v3.0&lt;br /&gt;&lt;br /&gt;&lt;a href=http://seb2lyon.site11.com&gt;Visitez mon site web !!!&lt;/a&gt;</source>
