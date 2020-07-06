@@ -603,7 +603,7 @@ void FenPrincipale::gestionAttributs()
 // Information window
 void FenPrincipale::fenetreInfo()
 {
-   QMessageBox::information(this, tr("Information"), tr("<strong>CodeGenerator v. 4.4</strong><br /><br />Programmeur : Seb2lyon<br />Développé entre le 30-01-2018 et le 31-01-2020<br />GNU General Public License v3.0<br /><br /><a href=http://seb2lyon.info.free.fr>Visitez mon site web !!!</a>"));
+   QMessageBox::information(this, tr("Information"), tr("<strong>CodeGenerator v. 4.4</strong><br /><br />Programmeur : Seb2lyon<br />Développé entre le 30-01-2018 et le 07-07-2020<br />GNU General Public License v3.0<br /><br /><a href=http://seb2lyon.info.free.fr>Visitez mon site web !!!</a>"));
 }
 
 // Add attributes in the code
